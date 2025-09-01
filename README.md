@@ -1,25 +1,39 @@
 # ⚖️ Legal Clarity - AI-Powered Legal Document Simplification
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?logo=google-cloud&logoColor=white)](https://cloud.google.com/)
-[![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![AI Powered](https://img.shields.io/badge/AI%20Powered-Gemini-orange)](https://cloud.google.com/vertex-ai)
+[![React](https://img.shields.io/badge/React-19.1.1-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.1.2-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.12-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Status](https://img.shields.io/badge/Status-Frontend%20MVP-green)](https://github.com/pwnjoshi/clarity-legal)
 
 > **Bringing clarity to legal complexity through the power of AI** 🚀
 
-Transform incomprehensible legal documents into clear, understandable language that everyone can comprehend.
+A modern React application that will transform incomprehensible legal documents into clear, understandable language that everyone can comprehend.
 
 ---
 
 ## 🌟 What is Legal Clarity?
 
-Legal Clarity is an innovative AI-powered platform that bridges the gap between complex legal language and everyday understanding. Our mission is to democratize access to legal information by making contracts, agreements, and legal documents transparent and accessible to everyone.
+Legal Clarity is an innovative AI-powered platform currently in development that will bridge the gap between complex legal language and everyday understanding. Our mission is to democratize access to legal information by making contracts, agreements, and legal documents transparent and accessible to everyone.
 
 ### 🎯 Core Mission
 **Empowering individuals and businesses to understand their legal commitments without requiring a law degree.**
 
-### ✨ Key Features
+### 🚧 Current Status
+**Frontend MVP Complete** - The user interface and core React application are built and functional. AI integration and backend services are planned for the next development phase.
+
+### ✨ Current Features (MVP)
+
+| Feature | Status | Description |
+|---------|--------|---------|
+| 📱 **Modern UI** | ✅ **Complete** | Clean, responsive React interface |
+| 📂 **Document Library** | ✅ **Complete** | View and manage uploaded documents |
+| 📄 **File Upload Interface** | ✅ **Complete** | Drag-and-drop file upload with format validation |
+| ⚙️ **Document Configuration** | ✅ **Complete** | Select document type for processing |
+| 🎨 **Professional Design** | ✅ **Complete** | TailwindCSS styling with modern aesthetics |
+| 🔄 **React Router** | ✅ **Complete** | Multi-page navigation system |
+
+### 🔮 Planned Features (Next Phase)
 
 | Feature | Description | Benefit |
 |---------|-------------|---------|
@@ -28,39 +42,47 @@ Legal Clarity is an innovative AI-powered platform that bridges the gap between 
 | 💬 **Interactive Chat** | Ask questions about your document | Get instant answers |
 | 📊 **Clause Scoring** | Rate clauses from fair to concerning | Make informed decisions |
 | 🔒 **Secure Processing** | End-to-end encryption and privacy | Peace of mind |
-| 📱 **Multi-Format Support** | PDF, Word, images, and more | Universal compatibility |
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Current Architecture (MVP)
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────────┐
 │   Frontend      │    │     Backend      │    │   Google Cloud      │
-│   (React)       │    │   (Node.js)      │    │    Services         │
+│   (React)       │    │   (Planned)      │    │   (Planned)         │
 │                 │    │                  │    │                     │
-│ • File Upload   │◄──►│ • API Gateway    │◄──►│ • Document AI       │
-│ • Document View │    │ • File Handler   │    │ • Gemini AI         │
+│ • File Upload ✅│    │ • API Gateway    │    │ • Document AI       │
+│ • Document View✅│    │ • File Handler   │    │ • Gemini AI         │
 │ • Risk Display  │    │ • AI Integration │    │ • Cloud Storage     │
 │ • Q&A Interface │    │ • Risk Analyzer  │    │ • Firestore DB      │
 └─────────────────┘    └──────────────────┘    └─────────────────────┘
 ```
 
-### 🛠️ Technology Stack
+**Current Status**: Frontend application built with React + Vite, ready for backend integration.
 
-**Frontend Technologies:**
-- **React 18** - Modern component-based UI
-- **TailwindCSS** - Utility-first styling
-- **React Router** - Client-side navigation
-- **Axios** - HTTP client for API calls
+### 🛠️ Current Technology Stack
 
-**Backend Technologies:**
+**Frontend (Implemented):**
+- **React 19.1.1** - Modern component-based UI with latest features
+- **Vite 7.1.2** - Lightning-fast build tool and dev server
+- **React Router 7.8.2** - Client-side navigation
+- **TailwindCSS 4.1.12** - Utility-first styling framework
+- **Lucide React** - Beautiful icon library
+- **ESLint** - Code quality and consistency
+
+**Development Tools:**
+- **PostCSS + Autoprefixer** - CSS processing
+- **Vite Plugin React** - React support for Vite
+- **Modern ES Modules** - Latest JavaScript features
+
+**Planned Backend Technologies:**
 - **Node.js + Express** - RESTful API server
-- **Multer** - File upload middleware
 - **Firebase Admin SDK** - Authentication & database
 - **Google Cloud SDK** - AI service integration
+- **Multer** - File upload middleware
 
-**AI & Cloud Services:**
+**Planned AI & Cloud Services:**
 - **Google Document AI** - Text extraction from documents
 - **Gemini API (Vertex AI)** - Natural language processing
 - **Google Cloud Storage** - Secure file storage
@@ -69,9 +91,9 @@ Legal Clarity is an innovative AI-powered platform that bridges the gap between 
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start Guide
 
-### Step 1: Prerequisites Installation
+### Prerequisites
 
 **Install Node.js:**
 ```bash
@@ -88,292 +110,256 @@ npm --version
 git --version
 ```
 
-### Step 2: Clone and Setup Project
+### Installation & Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/legal-clarity.git
-cd legal-clarity
+git clone https://github.com/pwnjoshi/clarity-legal.git
+cd clarity-legal
 
-# Install backend dependencies
-cd backend
+# Install dependencies
 npm install
 
-# Install frontend dependencies
-cd ../frontend
-npm install
-```
-
-### Step 3: Google Cloud Configuration
-
-#### 3.1 Create Google Cloud Project
-
-1. Visit [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing one
-3. Note your **Project ID**
-
-#### 3.2 Enable Required APIs
-
-```bash
-# Install Google Cloud CLI from https://cloud.google.com/sdk/docs/install
-
-# Authenticate
-gcloud auth login
-gcloud config set project YOUR_PROJECT_ID
-
-# Enable APIs
-gcloud services enable documentai.googleapis.com
-gcloud services enable aiplatform.googleapis.com
-gcloud services enable storage-api.googleapis.com
-gcloud services enable run.googleapis.com
-gcloud services enable firestore.googleapis.com
-```
-
-#### 3.3 Create Service Account
-
-```bash
-# Create service account
-gcloud iam service-accounts create legal-clarity-service \
-    --display-name="Legal Clarity Service Account"
-
-# Grant necessary permissions
-gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
-    --member="serviceAccount:legal-clarity-service@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/documentai.editor"
-
-gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
-    --member="serviceAccount:legal-clarity-service@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/aiplatform.user"
-
-gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
-    --member="serviceAccount:legal-clarity-service@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/storage.admin"
-
-# Download service account key
-gcloud iam service-accounts keys create service-account-key.json \
-    --iam-account=legal-clarity-service@YOUR_PROJECT_ID.iam.gserviceaccount.com
-```
-
-### Step 4: Firebase Setup
-
-1. Visit [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project or use existing Google Cloud project
-3. Enable **Authentication** and **Firestore Database**
-4. Get your Firebase configuration from Project Settings
-
-### Step 5: Environment Configuration
-
-**Backend Environment (`.env`):**
-```env
-# Google Cloud
-GOOGLE_CLOUD_PROJECT_ID=your-project-id
-GOOGLE_APPLICATION_CREDENTIALS=./service-account-key.json
-VERTEX_AI_LOCATION=us-central1
-
-# Firebase
-FIREBASE_PROJECT_ID=your-firebase-project
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=legal-clarity-service@your-project.iam.gserviceaccount.com
-
-# Server Configuration
-PORT=5000
-NODE_ENV=development
-CORS_ORIGIN=http://localhost:3000
-
-# Document AI
-DOCUMENT_AI_PROCESSOR_ID=your-processor-id
-DOCUMENT_AI_LOCATION=us
-
-# Storage
-GCS_BUCKET_NAME=legal-clarity-documents
-```
-
-**Frontend Environment (`.env`):**
-```env
-REACT_APP_API_URL=http://localhost:5000
-REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-REACT_APP_FIREBASE_PROJECT_ID=your-project-id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=123456789
-REACT_APP_FIREBASE_APP_ID=1:123456789:web:abcdef
-```
-
----
-
-## 🖥️ Running the Application
-
-### Development Mode
-
-**Terminal 1 - Backend:**
-```bash
-cd backend
+# Start the development server
 npm run dev
+
+# Your app will be available at http://localhost:5173
 ```
 
-**Terminal 2 - Frontend:**
-```bash
-cd frontend
-npm start
-```
-
-**Access Points:**
-- 🌐 **Frontend**: http://localhost:3000
-- 🔧 **Backend API**: http://localhost:5000
-- 📊 **API Documentation**: http://localhost:5000/api-docs
-
-### Production Deployment
+### Available Scripts
 
 ```bash
-# Build frontend for production
-cd frontend
+# Development server with hot reload
+npm run dev
+
+# Build for production
 npm run build
 
-# Deploy backend to Google Cloud Run
-cd ../backend
-gcloud run deploy legal-clarity-api \
-    --source . \
-    --platform managed \
-    --region us-central1 \
-    --allow-unauthenticated \
-    --set-env-vars="NODE_ENV=production"
+# Preview production build
+npm run preview
 
-# Deploy frontend to Firebase Hosting
-cd ../frontend
-npm install -g firebase-tools
-firebase login
-firebase deploy
+# Run ESLint
+npm run lint
+```
+
+### Project Structure
+
+```
+clarity-legal/
+├── public/              # Static assets
+├── src/                 # Source code
+│   ├── pages/          # React pages
+│   │   ├── home.jsx    # Main dashboard
+│   │   └── about.jsx   # About page
+│   ├── App.jsx         # Main App component
+│   ├── main.jsx        # Entry point
+│   └── index.css       # Global styles
+├── package.json        # Dependencies and scripts
+├── vite.config.js      # Vite configuration
+├── tailwind.config.js  # Tailwind configuration (when needed)
+└── README.md           # This file
+```
+
+### Key Components
+
+**🏠 Home Page (`src/pages/home.jsx`)**
+- File upload interface with drag-and-drop
+- Document library with processing status
+- Document type configuration
+- Professional header with user profile
+- Responsive design with sidebar navigation
+
+**📋 About Page (`src/pages/about.jsx`)**
+- Project information and introduction
+- Landing page content
+
+## 🔮 Next Development Phase
+
+### Backend Integration (Planned)
+
+**Google Cloud Setup** (when ready for backend):
+```bash
+# Install Google Cloud CLI
+# Enable required APIs
+gcloud services enable documentai.googleapis.com
+gcloud services enable aiplatform.googleapis.com
+
+# Create service account and download credentials
+# Set up environment variables
 ```
 
 ---
 
-## 📱 How to Use Legal Clarity
+## 🖥️ Current Application Features
 
-### 1. **Upload Your Document**
-- Drag and drop or browse for your legal document
-- Supported: PDF, DOC, DOCX, PNG, JPG (up to 10MB)
-- Documents are processed securely in the cloud
+### ✨ What You Can Do Now
 
-### 2. **Get Instant Analysis**
-- **Plain English Summary**: Understand what the document means
-- **Key Points**: Important clauses highlighted
-- **Risk Assessment**: Visual indicators for concerning terms
+1. **🎨 Beautiful Interface**: Modern, clean design with professional styling
+2. **📂 Document Management**: View your document library with different statuses
+3. **⬆️ File Upload**: Drag-and-drop interface ready for document processing
+4. **⚙️ Document Configuration**: Select document types for future processing
+5. **👤 User Profile**: Professional header with user management interface
+6. **📱 Responsive Design**: Works perfectly on desktop, tablet, and mobile
 
-### 3. **Explore Clause Details**
-- Click on any clause for detailed explanation
-- See why certain terms might be risky
-- Get suggestions for improvements
+### 🔧 Development Features
 
-### 4. **Ask Questions**
-- Interactive chat with your document
-- Ask specific questions about terms
-- Get instant, context-aware answers
+- **⚡ Lightning Fast**: Vite dev server with instant hot reload
+- **📏 ESLint Integration**: Code quality and consistency checking
+- **🎯 Modern JavaScript**: ES modules with latest React features
+- **📦 Optimized Build**: Production-ready builds with Vite
 
-### 5. **Make Informed Decisions**
-- Download simplified summary
-- Share insights with advisors
-- Negotiate with confidence
-
----
-
-## 🧪 Testing the Application
-
-### Sample Documents for Testing
-
-We've included sample legal documents in the `samples/` directory:
-- `employment-contract.pdf` - Standard employment agreement
-- `rental-agreement.docx` - Residential lease contract
-- `nda-template.pdf` - Non-disclosure agreement
-- `service-terms.pdf` - Terms of service example
-
-### Running Tests
+### 🚀 Production Deployment (Static Hosting)
 
 ```bash
-# Backend unit tests
-cd backend
-npm test
+# Build for production
+npm run build
 
-# Frontend component tests
-cd frontend
-npm test
-
-# End-to-end testing
-npm run test:e2e
-
-# API integration tests
-cd backend
-npm run test:integration
+# The dist/ folder contains your production build
+# Deploy to any static hosting service:
 ```
+
+**Recommended Hosting Options:**
+- **Vercel**: `vercel deploy` (recommended for React apps)
+- **Netlify**: Drag and drop the `dist/` folder
+- **Firebase Hosting**: `firebase deploy`
+- **GitHub Pages**: Perfect for project showcases
+
+---
+
+## 📱 Current Application Usage
+
+### 🏠 Home Dashboard
+1. **Navigate to Home**: Visit the main dashboard at `/home`
+2. **View Document Library**: See sample documents with different processing statuses
+3. **Upload Interface**: Use the file upload area (UI ready for backend integration)
+4. **Document Configuration**: Select document type from dropdown menu
+5. **User Profile**: Access profile dropdown in the header
+
+### 📄 Document Library Features
+- **Processing Status**: Visual indicators (processed, processing, none)
+- **Document Types**: Contract, Privacy Policy, Terms of Service, NDA, etc.
+- **Action Buttons**: Re-analyze and Report options for processed documents
+- **Responsive Layout**: Sidebar navigation that adapts to screen size
+
+### 🎯 Future Integration Points (Ready for Backend)
+- File upload handler prepared for API integration
+- Document configuration form ready for processing options
+- Status indicators ready for real-time updates
+- User interface prepared for AI-generated content display
+
+---
+
+## 🧪 Development and Testing
+
+### 🔍 Code Quality
+
+```bash
+# Run ESLint for code quality checks
+npm run lint
+
+# Check for build errors
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+### 📊 Sample Data
+
+The application includes sample documents in the interface:
+- **Software License Agreement** - Terms of Service type
+- **Employment Contract** - Senior Developer role
+- **Privacy Policy Update** - Currently processing status
+- **Apartment Lease Agreement** - Processed status
+- **NDA - Client Project** - No processing status
+
+### 🧪 Future Testing Framework (Planned)
+- Component testing with React Testing Library
+- End-to-end testing with Playwright or Cypress
+- API integration testing when backend is implemented
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Common Issues
+### Common Development Issues
 
-**1. Google Cloud Authentication Error**
+**1. Port Already in Use**
 ```bash
-# Solution: Re-authenticate
-gcloud auth application-default login
+# Vite default port 5173 is taken
+# Kill the process or Vite will automatically use next available port
+netstat -ano | findstr :5173
 ```
 
-**2. Document AI Processing Failed**
-```bash
-# Check if Document AI API is enabled
-gcloud services list --enabled | grep documentai
-```
-
-**3. Frontend Build Errors**
+**2. Node Modules Issues**
 ```bash
 # Clear cache and reinstall
-cd frontend
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-**4. Backend Port Conflicts**
+**3. Build Errors**
 ```bash
-# Change port in backend/.env
-PORT=5001
+# Check for ESLint errors
+npm run lint
+
+# Clean build
+rm -rf dist
+npm run build
+```
+
+**4. Vite Development Server Issues**
+```bash
+# Clear Vite cache
+npm run dev -- --force
 ```
 
 ### Getting Help
 
-- 📖 **Documentation**: Check our [Wiki](https://github.com/your-username/legal-clarity/wiki)
-- 🐛 **Bug Reports**: [Create an Issue](https://github.com/your-username/legal-clarity/issues)
-- 💬 **Discussions**: [Join our Community](https://github.com/your-username/legal-clarity/discussions)
+- 📖 **Issues**: [GitHub Issues](https://github.com/pwnjoshi/clarity-legal/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/pwnjoshi/clarity-legal/discussions)
+- 📧 **Contact**: For project-specific questions
 
 ---
 
-## 📈 Performance & Scalability
+## 📈 Performance & Technical Details
 
-- **Processing Speed**: Documents analyzed in under 30 seconds
-- **Concurrent Users**: Supports 1000+ simultaneous users
-- **Uptime**: 99.9% availability with Cloud Run auto-scaling
-- **Storage**: Unlimited document processing with automatic cleanup
+- **Development Server**: Lightning-fast with Vite's HMR
+- **Build Size**: Optimized with Vite's tree-shaking and code splitting
+- **Browser Support**: Modern browsers with ES modules support
+- **Mobile Responsive**: Fully responsive design with TailwindCSS
+- **Load Time**: Instant page loads with React 19's performance improvements
 
 ---
 
 ## 🔮 Roadmap
 
-### Phase 1 (Current - MVP)
-- ✅ Core document processing
-- ✅ Basic AI summarization
-- 🔄 Risk assessment system
+### Phase 1 (Current - Frontend MVP)
+- ✅ React application architecture
+- ✅ User interface design
+- ✅ Document library interface
+- ✅ File upload interface
+- ✅ Responsive design implementation
 
-### Phase 2 (Q4 2024)
+### Phase 2 (Backend Integration - Planned)
+- 📋 Node.js API server development
+- 📋 Google Cloud AI services integration
+- 📋 Document processing pipeline
+- 📋 User authentication system
+- 📋 Database integration
+
+### Phase 3 (AI Features - Planned)
+- 📋 Legal document analysis with Gemini AI
+- 📋 Risk assessment algorithms
+- 📋 Plain English translation
+- 📋 Interactive Q&A chatbot
+- 📋 Clause scoring system
+
+### Phase 4 (Advanced Features - Future)
 - 📋 Mobile applications (iOS/Android)
+- 📋 Multilingual support (Hindi, Spanish, French)
 - 📋 Advanced clause comparison
 - 📋 Legal precedent database
-
-### Phase 3 (Q1 2025)
-- 📋 Multilingual support (Hindi, Spanish, French)
-- 📋 Real-time collaboration features
-- 📋 Integration with legal databases
-
-### Phase 4 (Q2 2025)
-- 📋 AI-powered contract generation
-- 📋 Regulatory compliance checking
 - 📋 Enterprise-grade features
 
 ---
