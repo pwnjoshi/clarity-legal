@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import "./Home.css";
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import "./home.css";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [docType, setDocType] = useState("Other");
+  const [dropdownOpen, setDropdownOpen] = useState(false); // ✅ profile dropdown toggle
+  const profileRef = useRef(null); // ref to detect outside clicks
 
   const documents = [
     { title: "Software License Agreement", type: "Terms of Service", date: "1/20/2025", status: "processed" },
@@ -18,6 +21,19 @@ export default function Home() {
     setSelectedFile(file ? file.name : null);
   };
 
+  // Close dropdown when clicking outside profile container
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="home-container">
       {/* Header */}
@@ -30,18 +46,35 @@ export default function Home() {
           <span className="logo-tagline">Document Decoder</span>
         </div>
 
-        <nav className="nav-links">
-          <a href="#">Home</a>
-          <a href="#">Pricing</a>
-          <a href="#">About</a>
-          <a href="#">FAQ</a>
-          <a href="#">Help</a>
+        {/* Left Navbar */}
+        <nav className="nav-left">
+          <Link to="/" className="nav-btn">Home</Link>
+          <a href="#" className="nav-btn">Pricing</a>
         </nav>
 
+        {/* Right Navbar */}
         <div className="navbar-right">
           <span className="usage">2/3 Documents Used</span>
-          <button className="upgrade-btn">👑 Upgrade</button>
-          <div className="profile">JD</div>
+          <button className="upgrade-btn">
+            <span className="upgrade-icon">👑</span> Upgrade
+          </button>
+
+          <div className="profile-container" ref={profileRef}>
+            <div 
+              className="profile" 
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            >
+              JD
+            </div>
+            {dropdownOpen && (
+              <ul className="profile-dropdown">
+                <li>My Profile</li>
+                <li>Account</li>
+                <li>Plans</li>
+                <li>Log Out</li>
+              </ul>
+            )}
+          </div>
         </div>
       </header>
 
@@ -84,18 +117,27 @@ export default function Home() {
             <p>📄 Drop your document here</p>
             <p className="upload-sub">or click below to browse your files</p>
             <input type="file" id="fileInput" hidden onChange={handleFileChange} />
-            <button onClick={() => document.getElementById("fileInput").click()} className="choose-file-btn">
+            <button
+              onClick={() => document.getElementById("fileInput").click()}
+              className="choose-file-btn"
+            >
               Choose File
             </button>
             {selectedFile && <p className="file-selected">✅ Selected: {selectedFile}</p>}
-            <p className="upload-info">Supported formats: PDF, DOC, DOCX, TXT (Max 10MB)</p>
+            <p className="upload-info">
+              Supported formats: PDF, DOC, DOCX, TXT (Max 10MB)
+            </p>
           </div>
 
           {/* Config */}
           <div className="config-box">
             <h3 className="config-title">⚙️ Document Configuration</h3>
             <label className="config-label">Document Type</label>
-            <select value={docType} onChange={(e) => setDocType(e.target.value)} className="config-select">
+            <select
+              value={docType}
+              onChange={(e) => setDocType(e.target.value)}
+              className="config-select"
+            >
               <option>Other</option>
               <option>Contract</option>
               <option>Privacy Policy</option>
@@ -104,16 +146,6 @@ export default function Home() {
           </div>
         </section>
       </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>
-          © 2025 Clarity Legal | <span className="disclaimer">DISCLAIMER:</span> This tool provides general information only, not legal advice.
-        </p>
-        <p className="footer-links">
-          <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a>
-        </p>
-      </footer>
     </div>
   );
 }
