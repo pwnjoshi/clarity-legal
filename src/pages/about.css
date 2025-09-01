@@ -1,0 +1,184 @@
+/* Global Dark Setup */
+.dark-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #050509;
+  color: #e0e0e0;
+  font-family: Inter, sans-serif;
+}
+
+/* Navbar with Neon Glow */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(10, 10, 20, 0.8);
+  backdrop-filter: blur(8px);
+}
+.logo-section {
+  display: flex;
+  flex-direction: column;
+}
+.logo-icon {
+  font-size: 2rem;
+  text-shadow: 0 0 8px #8d6ff0;
+}
+.logo-text {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #8d6ff0;
+}
+.logo-tagline {
+  font-size: 0.875rem;
+  color: #aaa;
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-link {
+  color: #aaa;
+  padding: 0.25rem;
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #8d6ff0;
+  transition: width 0.3s;
+}
+.nav-link:hover {
+  color: #fff;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.navbar-right .usage {
+  margin-right: 1rem;
+}
+.upgrade-btn {
+  background: linear-gradient(135deg, #8d6ff0, #d67ce5);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 8px rgba(141, 111, 240, 0.6);
+  transition: opacity 0.3s;
+}
+.upgrade-btn:hover {
+  opacity: 0.8;
+}
+
+/* Main content */
+.about-main {
+  flex: 1;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 6px #8d6ff0;
+}
+.description {
+  font-size: 1.125rem;
+  color: #bbb;
+  margin-bottom: 2rem;
+}
+.highlight {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Features section */
+.section-title {
+  font-size: 1.75rem;
+  color: #8d6ff0;
+  margin-bottom: 1rem;
+}
+.features-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.feature-card {
+  background: rgba(20, 20, 30, 0.8);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+}
+.feature-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.feature-desc {
+  color: #ccc;
+}
+
+/* Reviews section */
+.reviews {
+  display: grid;
+  gap: 1.5rem;
+}
+.review-card {
+  background: rgba(20, 20, 30, 0.8);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.star-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: #facc15;
+}
+.review-text {
+  color: #ddd;
+}
+.review-author {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #aaa;
+}
+
+/* Footer */
+.footer {
+  padding: 1.5rem 2rem;
+  background: rgba(10, 10, 20, 0.8);
+  backdrop-filter: blur(8px);
+  font-size: 0.875rem;
+  text-align: center;
+  color: #bbb;
+}
+.disclaimer {
+  color: #f87171;
+  font-weight: 600;
+}
+.footer-links a {
+  color: #aaa;
+  margin: 0 0.25rem;
+  text-decoration: none;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
