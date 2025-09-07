@@ -13,19 +13,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 2rem;
+  padding: 0.5rem 2rem;
 }
+
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.005rem;
 }
-.logo-icon {
-  font-size: 2rem;
-  text-shadow: 0 0 8px #8d6ff0;
+
+/* ✅ New logo image styling */
+.logo-image {
+  height: 13rem; /* same as old icon size */
+  width: auto;
+  object-fit: contain;
 }
+
 .logo-text {
-  font-size: 1.75rem;
+  font-size: 3rem;
   font-weight: 700;
   color: #8d6ff0;
 }
@@ -35,7 +40,6 @@
   display: flex;
   gap: 1rem;
 }
-
 .auth-btn {
   padding: 0.5rem 1.2rem;
   border: none;
@@ -45,7 +49,6 @@
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
 }
-
 .signup-btn {
   background: linear-gradient(to right, #6366f1, #9333ea);
   color: white;
@@ -54,7 +57,6 @@
   background: linear-gradient(to right, #6366f1, #9333ea);
   transform: scale(1.05);
 }
-
 .login-btn {
   background: transparent;
   border: 1px solid #e0e0e0;
@@ -249,4 +251,3 @@
   padding: 8px 0;
   margin: 0;
 }
-
