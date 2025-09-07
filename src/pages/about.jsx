@@ -18,30 +18,51 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext.jsx";  // ✅
 import "./about.css";
+import logoImg from "./logo new.jpg"; // ✅ Import the new logo image
 
 export default function About() {
   const navigate = useNavigate();
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const { isLoggedIn } = useAuth(); // ✅ get logged-in user
 
   return (
     <div className="dark-container">
       {/* Logo + Auth Section */}
       <div className="about-header">
-        <div className="logo-wrapper">
-          <span className="logo-icon">⚖️</span>
+        <div className="logo">
+          {/* ✅ Only image + text side by side */}
+          <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
           <span className="logo-text">Clarity Legal</span>
         </div>
         <div className="auth-buttons">
-          <button className="auth-btn signup-btn">Sign Up</button>
-          <button className="auth-btn login-btn">Log In</button>
+          {isLoggedIn ? (
+            <button className="auth-btn profile-btn">Profile</button>
+          ) : (
+            <>
+              <button
+                className="auth-btn login-btn"
+                onClick={() => navigate("/login")}
+              >
+                Log In
+              </button>
+              <button
+                className="auth-btn signup-btn"
+                onClick={() => navigate("/login")}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
       </div>
 
       <main className="about-main">
         <h1 className="heading">Welcome to Clarity Legal</h1>
 
-        <button className="try-btn" onClick={() => navigate("/home")}>
+        {/* ✅ Updated navigation to /login */}
+        <button className="try-btn" onClick={() => navigate("/login")}>
           ✨ Try for Free
         </button>
 
@@ -56,7 +77,7 @@ export default function About() {
         <div className="feature-card intro-tile">
           <h2 className="intro-title">Why Clarity Legal Matters</h2>
           <p className="intro-text">
-           Clarity Legal simplifies complex legal documents, making them clear,
+            Clarity Legal simplifies complex legal documents, making them clear,
             accessible, and trustworthy. Whether you’re a student, professional,
             or business owner, our tool saves time, prevents costly mistakes,
             and helps you make confident, informed decisions. By translating
@@ -289,11 +310,11 @@ export default function About() {
               </button>
               {showLangMenu && (
                 <ul className="language-menu">
-                  <li>English</li>
-                  <li>हिन्दी</li>
-                  <li>Español</li>
-                  <li>Français</li>
-                  <li>Deutsch</li>
+                  <li> English </li>
+                  <li> हिन्दी </li>
+                  <li> Español </li>
+                  <li> Français </li>
+                  <li> Deutsch </li>
                 </ul>
               )}
             </div>
