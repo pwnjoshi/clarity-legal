@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
+import logoImg from "./logo new.jpg"; // ✅ Import the logo image
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -40,7 +41,8 @@ export default function Home() {
       <header className="home-header">
         <div className="logo-section">
           <div className="logo">
-            <span className="logo-icon">⚖️</span>
+            {/* ✅ Only image + text, no emoji */}
+            <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
             <span className="logo-text">Clarity Legal</span>
           </div>
           <span className="logo-tagline">Document Decoder</span>
