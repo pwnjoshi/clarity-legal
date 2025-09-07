@@ -2,21 +2,22 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import About from "./pages/about";
-import "./index.css"; // global css
+import Login from "./pages/login";
+import { AuthProvider } from "./pages/AuthContext.jsx";
+import "./index.css";
 
 function App() {
   return (
     <Router>
-      <div>
-        {/* ✅ Routes decide which page to render */}
-        <Routes>
-          {/* Default route -> About page */}
-          <Route path="/" element={<About />} />
-
-          {/* Home page */}
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </div>
+      <AuthProvider>   {/* ✅ wrap everything inside AuthProvider */}
+        <div>
+          <Routes>
+            <Route path="/" element={<About />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </div>
+      </AuthProvider>
     </Router>
   );
 }
