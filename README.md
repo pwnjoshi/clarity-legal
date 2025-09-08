@@ -6,13 +6,25 @@ Transform complex legal documents into clear, human-readable text with advanced 
 
 ## ✨ Features
 
-- 📄 **Document Upload**: Support for PDF, DOC, DOCX, and TXT files (up to 10MB)
+### Core Functionality
+- 📄 **Enhanced Document Upload**: Support for PDF, DOC, DOCX, and TXT files (up to 10MB)
 - 🤖 **AI Analysis**: Google Gemini AI converts legal jargon to plain English
-- 🔍 **Text Extraction**: Google Cloud Document AI processes any document type
-- ⚠️ **Risk Assessment**: Identify potential concerns and risk factors
+- 🔍 **Advanced Text Extraction**: Google Cloud Document AI with OCR detection
+- ⚠️ **Risk Assessment**: Comprehensive risk analysis with detailed factors
 - ☁️ **Cloud Storage**: Secure Firebase Storage for document management
-- 📱 **Responsive Design**: Modern, dark-themed interface for all devices
-- 📊 **Document Dashboard**: Track and manage all processed documents
+- 📊 **Interactive Document Dashboard**: Real-time document tracking and management
+
+### Enhanced User Experience
+- 📱 **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- 🎨 **Modern UI**: Glass morphism effects and smooth animations
+- 🖥️ **Improved Layout**: Better header alignment and component spacing
+- ⚡ **Performance**: Smooth transitions and optimized loading states
+
+### Document Processing
+- 🔄 **Smart Text Cleaning**: Advanced PDF text extraction with artifact removal
+- 📋 **Formatted Analysis View**: Properly organized text with sections and paragraphs
+- 🎯 **Highlighted Sections**: Interactive text highlighting with explanations
+- 🔍 **OCR Detection**: Identifies scanned PDFs requiring OCR processing
 
 ## 🚀 Quick Start
 
@@ -93,22 +105,31 @@ clarity-legal-main/
 ## 🛠️ Technology Stack
 
 ### Frontend
-- **React 18** - UI framework
-- **Vite** - Build tool and dev server
-- **React Router** - Client-side routing
-- **Custom CSS** - Modern dark theme
+- **React 18** - UI framework with modern hooks
+- **Vite** - Lightning-fast build tool and dev server
+- **React Router** - Client-side routing with protected routes
+- **Custom CSS** - Modern dark theme with glass morphism effects
+- **Responsive Design** - Mobile-first approach with smooth animations
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Multer** - File upload handling
-- **Firebase Admin SDK** - Database and storage
+- **Node.js 18+** - Runtime environment with ES modules
+- **Express.js** - Web framework with middleware support
+- **Multer** - Advanced file upload handling with validation
+- **Firebase Admin SDK** - Database, storage, and authentication
+- **PDF-Parse** - Enhanced PDF text extraction
+- **Mammoth.js** - DOCX document processing
 
 ### AI & Cloud Services
-- **Google Cloud Document AI** - Text extraction
-- **Google Gemini AI** - Document analysis
-- **Firebase Storage** - File storage
-- **Firebase Firestore** - Document metadata
+- **Google Cloud Document AI** - Professional text extraction with OCR
+- **Google Gemini AI** - Advanced document analysis and simplification
+- **Firebase Storage** - Secure cloud file storage
+- **Firebase Firestore** - Real-time NoSQL database
+
+### Enhanced Features
+- **Smart Text Processing** - Advanced cleaning and formatting algorithms
+- **Error Handling** - Comprehensive error detection and user feedback
+- **Performance Optimization** - Efficient loading and caching strategies
+- **Accessibility** - WCAG compliant with focus states and screen reader support
 
 ## 📖 API Documentation
 
@@ -205,4 +226,26 @@ For questions and support:
 
 ---
 
-**Status**: ✅ Production Ready | **Version**: 1.0.0 | **Last Updated**: September 2025
+## 🆕 What's New in v1.2.0
+
+### UI/UX Improvements
+- ✨ Removed branding text for cleaner header design
+- 🎨 Enhanced button styling with improved hover effects
+- 🖥️ Better header alignment and component spacing
+- 📱 Improved responsive design for mobile and tablet
+- ⚡ Smoother animations and transitions throughout
+
+### Document Processing Enhancements
+- 🔄 Advanced PDF text cleaning and artifact removal
+- 📋 Improved text formatting in analysis view with proper paragraphs
+- 🎯 Better section header and list formatting
+- 🔍 Enhanced OCR detection for scanned documents
+- 🛠️ More robust error handling and user feedback
+
+### Performance & Accessibility
+- ⏱️ Optimized loading states and transitions
+- 🖥️ Custom scrollbar styling for better UX
+- ♿ Improved focus states for keyboard navigation
+- 📊 Better document dashboard with enhanced filtering
+
+**Status**: ✅ Production Ready | **Version**: 1.2.0 | **Last Updated**: September 2025

@@ -12,13 +12,13 @@ export default function Dashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(false); //  profile dropdown toggle
   const profileRef = useRef(null); // ref to detect outside clicks
   
-  // ✅ Backend integration state
+  // Backend integration state
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const [uploadSuccess, setUploadSuccess] = useState(null);
   const [processedResult, setProcessedResult] = useState(null);
 
-  // ✅ Documents are now managed by DynamicDashboard component
+  // Documents are now managed by DynamicDashboard component
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -85,9 +85,8 @@ export default function Dashboard() {
       <header className="dashboard-header">
         <div className="logo-section">
           <div className="logo">
-            {/* ✅ Only image + text, no emoji */}
+            {/* ✅ Only image, no text */}
             <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
-            <span className="logo-text">Clarity Legal</span>
           </div>
         </div>
 

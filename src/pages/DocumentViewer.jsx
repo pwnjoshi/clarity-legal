@@ -139,65 +139,159 @@ This Agreement shall be governed by the laws of the State of California.`,
   };
 
   const renderHighlightedText = (text, highlights) => {
+    // Clean and format text function
+    const formatDocumentText = (rawText) => {
+      if (!rawText) return '';
+      
+      return rawText
+        // Normalize all line endings
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        // Clean up excessive whitespace but preserve intentional spacing
+        .replace(/[ \t]+/g, ' ')
+        // Handle paragraph breaks (double newlines)
+        .replace(/\n\s*\n\s*/g, '\n\n')
+        .trim();
+    };
+
+    // Convert formatted text to HTML with proper structure
+    const createDocumentHTML = (formattedText) => {
+      let html = formattedText;
+      
+      // Handle section headers (like "1. LICENSE GRANT")
+      html = html.replace(
+        /(^|\n)(\d+\.\s*)([A-Z][A-Z\s]{2,})(\n|$)/g, 
+        '$1<div class="section-header">$2$3</div>$4'
+      );
+      
+      // Handle subsections with letters (like "(a) copy, modify")
+      html = html.replace(
+        /(^|\n)\(([a-z])\)\s*/g, 
+        '$1<div class="subsection">• '
+      );
+      
+      // Convert paragraph breaks to proper HTML
+      html = html.replace(/\n\n/g, '</p><p>');
+      
+      // Convert single line breaks to br tags
+      html = html.replace(/\n/g, '<br>');
+      
+      // Wrap in paragraphs
+      html = '<p>' + html + '</p>';
+      
+      // Clean up empty paragraphs and fix structure
+      html = html
+        .replace(/<p>\s*<\/p>/g, '')
+        .replace(/<p>\s*<div/g, '<div')
+        .replace(/<\/div>\s*<\/p>/g, '</div>')
+        .replace(/<br>\s*<\/p>/g, '</p>')
+        .replace(/<p>\s*<br>/g, '<p>');
+      
+      return html;
+    };
+
+    const cleanText = formatDocumentText(text);
+    
+    // If no highlights, just return formatted text
     if (!highlights || highlights.length === 0) {
-      return <div className="document-text">{text}</div>;
+      return (
+        <div 
+          className="document-text formatted"
+          dangerouslySetInnerHTML={{ __html: createDocumentHTML(cleanText) }}
+        />
+      );
     }
+
+    // For text with highlights, we need to be more careful
+    // Create a simple formatted version with line breaks for highlighting
+    const simpleFormatted = cleanText
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>')
+      // Handle section headers inline
+      .replace(
+        /(^|<br>)(\d+\.\s*)([A-Z][A-Z\s]{2,})(<br>|$)/g, 
+        '$1<strong class="section-inline">$2$3</strong>$4'
+      )
+      // Handle subsections inline
+      .replace(
+        /(^|<br>)\(([a-z])\)\s*/g, 
+        '$1<span class="subsection-inline">• </span>'
+      );
 
     // Sort highlights by startIndex
     const sortedHighlights = [...highlights].sort((a, b) => a.startIndex - b.startIndex);
     
-    const elements = [];
+    // Build the content with highlights
+    let result = '';
     let lastIndex = 0;
 
     sortedHighlights.forEach((highlight, index) => {
       // Add text before highlight
       if (highlight.startIndex > lastIndex) {
-        elements.push(
-          <span key={`text-${index}`}>
-            {text.substring(lastIndex, highlight.startIndex)}
-          </span>
-        );
+        const beforeText = cleanText.substring(lastIndex, highlight.startIndex);
+        result += beforeText.replace(/\n/g, '<br>');
       }
 
-      // Add highlighted text
-      const highlightClass = `highlight ${highlight.type} ${highlight.severity}`;
-      elements.push(
-        <span
-          key={`highlight-${index}`}
-          className={highlightClass}
-          onMouseEnter={(e) => {
-            setHoveredHighlight(highlight);
-            setTooltipPosition({ 
-              x: e.clientX + 10, 
-              y: e.clientY - 10 
-            });
-          }}
-          onMouseMove={(e) => {
-            setTooltipPosition({ 
-              x: e.clientX + 10, 
-              y: e.clientY - 10 
-            });
-          }}
-          onMouseLeave={() => setHoveredHighlight(null)}
-          data-explanation={highlight.explanation}
-        >
-          {highlight.text}
-        </span>
-      );
-
+      // Add highlighted text with special wrapper
+      result += `<span class="highlight ${highlight.type} ${highlight.severity}" data-explanation="${highlight.explanation}" data-index="${index}">${highlight.text}</span>`;
+      
       lastIndex = highlight.endIndex;
     });
 
     // Add remaining text
-    if (lastIndex < text.length) {
-      elements.push(
-        <span key="text-end">
-          {text.substring(lastIndex)}
-        </span>
-      );
+    if (lastIndex < cleanText.length) {
+      const remainingText = cleanText.substring(lastIndex);
+      result += remainingText.replace(/\n/g, '<br>');
     }
 
-    return <div className="document-text">{elements}</div>;
+    // Apply formatting to the final result
+    result = result
+      .replace(
+        /(^|<br>)(\d+\.\s*)([A-Z][A-Z\s]{2,})(<br>|$)/g, 
+        '$1<div class="section-header">$2$3</div>$4'
+      )
+      .replace(
+        /(^|<br>)\(([a-z])\)\s*/g, 
+        '$1<div class="subsection">• </div>'
+      )
+      .replace(/<br><br>/g, '</p><p>')
+      .replace(/^/, '<p>')
+      .replace(/$/, '</p>')
+      .replace(/<p>\s*<\/p>/g, '')
+      .replace(/<p>\s*<div/g, '<div')
+      .replace(/<\/div>\s*<\/p>/g, '</div>');
+
+    return (
+      <div 
+        className="document-text formatted highlighted"
+        dangerouslySetInnerHTML={{ __html: result }}
+        onClick={(e) => {
+          // Handle highlight clicks
+          const highlight = e.target.closest('.highlight');
+          if (highlight) {
+            const index = parseInt(highlight.dataset.index);
+            const highlightData = sortedHighlights[index];
+            if (highlightData) {
+              setHoveredHighlight(highlightData);
+              setTooltipPosition({ 
+                x: e.clientX + 10, 
+                y: e.clientY - 10 
+              });
+            }
+          }
+        }}
+        onMouseMove={(e) => {
+          const highlight = e.target.closest('.highlight');
+          if (highlight && hoveredHighlight) {
+            setTooltipPosition({ 
+              x: e.clientX + 10, 
+              y: e.clientY - 10 
+            });
+          }
+        }}
+        onMouseLeave={() => setHoveredHighlight(null)}
+      />
+    );
   };
 
   const getSeverityColor = (severity) => {
@@ -293,9 +387,43 @@ This Agreement shall be governed by the laws of the State of California.`,
               <>
                 <h2>📄 Original Document Text</h2>
                 <div className="document-wrapper">
-                  <div className="document-text original">
-                    {document.extractedText}
-                  </div>
+                  <div 
+                    className="document-text original formatted"
+                    dangerouslySetInnerHTML={{ 
+                      __html: (() => {
+                        let html = document.extractedText
+                          .replace(/\r\n/g, '\n')
+                          .replace(/\r/g, '\n')
+                          .replace(/[ \t]+/g, ' ')
+                          .replace(/\n\s*\n\s*/g, '\n\n')
+                          .trim();
+                        
+                        // Handle section headers
+                        html = html.replace(
+                          /(^|\n)(\d+\.\s*)([A-Z][A-Z\s]{2,})(\n|$)/g, 
+                          '$1<div class="section-header">$2$3</div>$4'
+                        );
+                        
+                        // Handle subsections
+                        html = html.replace(
+                          /(^|\n)\(([a-z])\)\s*/g, 
+                          '$1<div class="subsection">• </div>'
+                        );
+                        
+                        // Convert to HTML structure
+                        html = html
+                          .replace(/\n\n/g, '</p><p>')
+                          .replace(/\n/g, '<br>')
+                          .replace(/^/, '<p>')
+                          .replace(/$/, '</p>')
+                          .replace(/<p>\s*<\/p>/g, '')
+                          .replace(/<p>\s*<div/g, '<div')
+                          .replace(/<\/div>\s*<\/p>/g, '</div>');
+                        
+                        return html;
+                      })()
+                    }}
+                  />
                 </div>
               </>
             )}

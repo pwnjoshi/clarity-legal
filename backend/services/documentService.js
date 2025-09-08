@@ -99,6 +99,12 @@ class DocumentService {
     try {
       console.log(`📄 Extracting text from PDF: ${filePath}`);
       
+      // Validate file exists and is readable
+      const stats = await fs.stat(filePath);
+      if (stats.size === 0) {
+        throw new Error('PDF file is empty');
+      }
+      
       // Lazy load pdf-parse to avoid initialization issues
       if (!pdfParse) {
         const pdfParseModule = await import('pdf-parse');
@@ -108,22 +114,60 @@ class DocumentService {
       // Read the PDF file as buffer
       const fileBuffer = await fs.readFile(filePath);
       
-      // Parse PDF and extract text
-      const data = await pdfParse(fileBuffer);
+      console.log(`📊 PDF file size: ${Math.round(stats.size / 1024)}KB`);
       
-      if (!data.text || data.text.trim().length === 0) {
-        throw new Error('No text found in PDF document');
+      // Parse PDF with enhanced options for better text extraction
+      const parseOptions = {
+        // Enable better text parsing
+        normalizeWhitespace: false,
+        disableCombineTextItems: false,
+        // Add timeout to prevent hanging
+        max: 10000 // Max number of pages to process
+      };
+      
+      const data = await pdfParse(fileBuffer, parseOptions);
+      
+      console.log(`📊 PDF parsing complete: ${data.numpages} pages processed`);
+      console.log(`📄 Title: ${data.info?.Title || 'No title'}`);
+      console.log(`👤 Author: ${data.info?.Author || 'Unknown'}`);
+      
+      if (!data.text) {
+        throw new Error('PDF parsing returned no text data');
       }
       
-      const extractedText = data.text.trim();
+      let extractedText = data.text.trim();
+      
+      if (extractedText.length === 0) {
+        // Try alternative extraction method for scanned PDFs
+        console.log('⚠️ No text found with standard method, PDF might be scanned or image-based');
+        throw new Error('This PDF appears to be scanned or image-based. Text extraction requires OCR capabilities. Please use Document AI for better results.');
+      }
+      
+      // Clean up common PDF extraction artifacts
+      extractedText = this.cleanPDFText(extractedText);
+      
       console.log(`✅ PDF text extraction successful (${extractedText.length} characters)`);
-      console.log(`📊 PDF info: ${data.numpages} pages, ${data.info?.Title || 'No title'}`);
+      
+      // Validate extracted text quality
+      if (extractedText.length < 50) {
+        console.warn('⚠️ Very short text extracted, PDF might have formatting issues');
+      }
       
       return extractedText;
 
     } catch (error) {
       console.error('❌ PDF extraction error:', error);
-      throw new Error(`PDF text extraction failed: ${error.message}`);
+      
+      // Provide more specific error messages
+      if (error.message.includes('Invalid PDF')) {
+        throw new Error('The PDF file appears to be corrupted or invalid. Please try a different file.');
+      } else if (error.message.includes('encrypted')) {
+        throw new Error('The PDF file is encrypted or password-protected. Please provide an unencrypted version.');
+      } else if (error.message.includes('scanned') || error.message.includes('image-based')) {
+        throw new Error('This PDF contains scanned images rather than text. OCR processing is required for text extraction.');
+      } else {
+        throw new Error(`PDF text extraction failed: ${error.message}`);
+      }
     }
   }
 
@@ -178,6 +222,29 @@ class DocumentService {
       console.error('❌ DOCX extraction error:', error);
       throw new Error(`DOCX text extraction failed: ${error.message}`);
     }
+  }
+
+  cleanPDFText(text) {
+    if (!text) return '';
+    
+    // Clean up common PDF extraction artifacts
+    let cleanedText = text
+      // Remove excessive whitespace
+      .replace(/\s+/g, ' ')
+      // Fix common PDF extraction issues
+      .replace(/\s*\n\s*/g, '\n')
+      // Remove form feed characters
+      .replace(/\f/g, '\n')
+      // Remove null characters
+      .replace(/\0/g, '')
+      // Fix broken words that span lines
+      .replace(/([a-z])\n([a-z])/g, '$1 $2')
+      // Fix multiple consecutive newlines
+      .replace(/\n{3,}/g, '\n\n')
+      // Trim whitespace
+      .trim();
+    
+    return cleanedText;
   }
 
   getMimeType(filePath) {

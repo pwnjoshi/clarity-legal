@@ -119,6 +119,162 @@
   font-size: 16px;
   white-space: pre-line;
   word-wrap: break-word;
+  color: #e8e8e8;
+  /* Better text formatting and spacing */
+  letter-spacing: 0.02em;
+  text-align: justify;
+  /* Handle paragraph spacing */
+  margin-bottom: 0;
+}
+
+/* Style for paragraphs in document text */
+.document-text p,
+.document-text div {
+  margin-bottom: 1.2em;
+  line-height: 1.8;
+}
+
+/* Better formatting for sections and headers */
+.document-text h1,
+.document-text h2,
+.document-text h3 {
+  color: #61dafb;
+  margin: 1.5em 0 0.8em 0;
+  font-weight: 600;
+}
+
+/* Handle numbered lists and bullet points */
+.document-text ol,
+.document-text ul {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.document-text li {
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}
+
+/* Enhanced formatting for document sections */
+.document-text.formatted {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #e8e8e8;
+}
+
+/* Document section headers */
+.document-text .section-header,
+.document-text .section-inline {
+  color: #61dafb;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 1.5em 0 0.8em 0;
+  padding: 0.3em 0;
+  display: block;
+  border-bottom: 2px solid rgba(97, 218, 251, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.document-text .section-inline {
+  display: inline;
+  border-bottom: 1px solid rgba(97, 218, 251, 0.2);
+  margin: 0;
+  padding: 0.2em 0;
+}
+
+/* Subsection styling */
+.document-text .subsection,
+.document-text .subsection-inline {
+  color: #ff9800;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em 0;
+  display: block;
+}
+
+.document-text .subsection-inline {
+  display: inline;
+  margin: 0;
+}
+
+/* Paragraph styling in formatted text */
+.document-text.formatted p {
+  margin: 1em 0;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.document-text.formatted p:first-child {
+  margin-top: 0;
+}
+
+.document-text.formatted p:last-child {
+  margin-bottom: 0;
+}
+
+/* Better spacing for highlighted text */
+.document-text.highlighted .highlight {
+  line-height: 1.6;
+  display: inline;
+  padding: 2px 4px;
+  margin: 0 1px;
+  border-radius: 3px;
+}
+
+/* Improve readability */
+.document-text.formatted {
+  word-spacing: 0.1em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better spacing for list items and subsections */
+.document-text .subsection {
+  margin-left: 1.5em;
+  position: relative;
+}
+
+.document-text .subsection::before {
+  content: '';
+  position: absolute;
+  left: -1.2em;
+  top: 0.1em;
+  width: 6px;
+  height: 6px;
+  background: #ff9800;
+  border-radius: 50%;
+}
+
+/* Improve highlight visibility in formatted text */
+.document-text.formatted .highlight {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.document-text.formatted .highlight:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+  z-index: 10;
+}
+
+/* Better contrast for original text */
+.document-text.original {
+  color: #f0f0f0;
+}
+
+/* Spacing improvements */
+.document-text.formatted .section-header + p,
+.document-text.formatted .subsection + p {
+  margin-top: 0.5em;
+}
+
+.document-text.formatted .section-header {
+  margin-top: 2em;
+}
+
+.document-text.formatted .section-header:first-child {
+  margin-top: 0;
 }
 
 .document-text.original {

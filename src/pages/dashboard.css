@@ -18,17 +18,23 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  min-height: 60px;
+  min-height: 64px; /* Increased slightly for better proportion */
+  /* Improved flex distribution */
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .logo-section {
   display: flex;
   align-items: center;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  /* Ensure perfect vertical alignment */
+  height: 40px;
 }
 
 /* ✅ Optimized logo image styling */
@@ -58,11 +64,17 @@
   color: #aaa;
   background: transparent;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* Better touch target */
 }
 .nav-left .nav-btn:hover {
   color: #fff;
-  transform: scale(1.08);
+  transform: translateY(-1px); /* Subtle lift instead of scale */
+  background: rgba(255, 255, 255, 0.05); /* Subtle background highlight */
 }
 .nav-left .nav-btn::after {
   content: "";
@@ -86,6 +98,8 @@
   align-items: center;
   gap: 1.2rem;
   margin-right: 2rem;
+  flex-shrink: 0; /* Prevent shrinking */
+  height: 40px; /* Match logo height for consistent alignment */
 }
 .usage {
   font-size: 1.2rem;
@@ -95,12 +109,18 @@
   border-radius: 0.6rem;
   background: transparent;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 .usage:hover {
   color: #fff;
-  transform: scale(1.08);
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.05);
 }
 .usage::after {
   content: "";
@@ -131,10 +151,15 @@
   align-items: center;
   gap: 0.3rem;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  min-height: 44px;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
 }
 .upgrade-btn:hover {
-  transform: scale(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  background: linear-gradient(to right, #7c3aed, #a855f7);
 }
 /* Crown emoji alignment fix */
 .upgrade-btn .upgrade-icon {
@@ -148,8 +173,8 @@
   position: relative;
 }
 .profile {
-  width: 48px;
-  height: 48px;
+  width: 44px; /* Slightly smaller for better proportion */
+  height: 44px;
   background: #1e1b4b;
   color: #a5b4fc;
   border-radius: 50%;
@@ -157,12 +182,17 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(30, 27, 75, 0.3);
 }
 .profile:hover {
-  transform: scale(1.08);
+  transform: translateY(-1px);
+  border-color: rgba(165, 180, 252, 0.3);
+  box-shadow: 0 4px 12px rgba(30, 27, 75, 0.4);
+  background: #2d2a5b;
 }
 
 /* Profile dropdown */
@@ -195,6 +225,8 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  min-height: 0; /* Allow flex items to shrink properly */
+  background: rgba(10, 10, 10, 0.9); /* Ensure consistent background */
 }
 
 /* Sidebar */
@@ -204,6 +236,10 @@
   border-right: 1px solid #222;
   padding: 1.5rem;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure full height */
+  backdrop-filter: blur(10px); /* Subtle glass effect */
 }
 .sidebar-title {
   font-weight: 600;
@@ -278,6 +314,10 @@
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Allow proper scrolling */
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(15, 15, 15, 0.9) 100%);
 }
 .page-title {
   font-size: 1.8rem;
@@ -295,19 +335,47 @@
   border-radius: 1rem;
   padding: 3rem 1rem;
   text-align: center;
-  background: #000;
+  background: rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+.upload-box:hover {
+  border-color: #818cf8;
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+  transform: translateY(-2px);
 }
 .upload-sub {
   color: #888;
   margin-bottom: 1rem;
 }
 .choose-file-btn {
-  padding: 0.5rem 1.2rem;
+  padding: 0.75rem 1.5rem;
   background: #4338ca;
   color: #fff;
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   border: none;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(67, 56, 202, 0.3);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.choose-file-btn:hover {
+  background: #5b4cdb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.4);
+}
+.choose-file-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 .file-selected {
   margin-top: 0.5rem;
@@ -324,8 +392,15 @@
 .config-box {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: #000;
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.config-box:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 .config-title {
   font-weight: 600;
@@ -338,10 +413,146 @@
   display: block;
 }
 .config-select {
-  background: #0a0a0a;
+  background: rgba(10, 10, 10, 0.8);
   border: 1px solid #333;
   color: #eee;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
   width: 250px;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 44px;
+}
+.config-select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: rgba(10, 10, 10, 0.9);
+}
+.config-select option {
+  background: #1a1a1a;
+  color: #eee;
+  padding: 0.5rem;
+}
+
+/* Responsive Design Improvements */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    padding: 0.5rem 1rem;
+    min-height: 60px;
+  }
+  
+  .nav-left {
+    gap: 1rem;
+    margin-left: 1rem;
+  }
+  
+  .navbar-right {
+    gap: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .sidebar {
+    width: 280px;
+    padding: 1rem;
+  }
+  
+  .content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .logo-section {
+    justify-content: center;
+  }
+  
+  .nav-left {
+    justify-content: center;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+  
+  .navbar-right {
+    justify-content: center;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-main {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #222;
+    max-height: 40vh;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  .upload-box {
+    padding: 2rem 1rem;
+  }
+  
+  .config-select {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Improved focus states for accessibility */
+.nav-btn:focus,
+.usage:focus,
+.upgrade-btn:focus,
+.profile:focus,
+.choose-file-btn:focus,
+.config-select:focus {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Loading and transition states */
+.dashboard-container {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Smooth scrollbars */
+.sidebar::-webkit-scrollbar,
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
