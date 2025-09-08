@@ -33,7 +33,7 @@ export default function Login() {
         // Sign up new user
         await createUserWithEmailAndPassword(auth, email, password);
       }
-      navigate("/home"); // ✅ redirect to home
+      navigate("/dashboard"); // ✅ redirect to dashboard
     } catch (err) {
       setError(err.message);
     } finally {
@@ -47,7 +47,7 @@ export default function Login() {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      navigate("/home");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     } finally {

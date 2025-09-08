@@ -1,4 +1,4 @@
-.home-container {
+.dashboard-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -8,23 +8,22 @@
 }
 
 /* Header */
-.home-header {
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1px 2rem;
+  padding: 0.75rem 2rem;
   background: #050509;
   border-bottom: 1px solid #1f1f1f;
   position: sticky;
   top: 0;
   z-index: 50;
+  min-height: 60px;
 }
 
 .logo-section {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap:0.1rem;
 }
 .logo {
   display: flex;
@@ -32,27 +31,17 @@
   gap: 0.5rem;
 }
 
-/* ✅ New logo image styling */
+/* ✅ Optimized logo image styling */
 .logo-image {
-  height: 2rem; /* same as about page */
+  height: 1.5rem; /* Reduced from 2rem for more compact header */
   width: auto;
   object-fit: contain;
 }
 
 .logo-text {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #818cf8;
-}
-  
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 700; 
-  color: #818cf8;
-}
-.logo-tagline {
-  font-size: 1.5rem;
-  color: #888;
 }
 
 /* Left Navbar */
@@ -202,7 +191,7 @@
 }
 
 /* Main */
-.home-main {
+.dashboard-main {
   display: flex;
   flex: 1;
   overflow: hidden;

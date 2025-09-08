@@ -20,7 +20,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext.jsx";  // ✅
 import "./about.css";
-import logoImg from "./logo new.jpg"; // ✅ Import the new logo image
+import logoImg from "../assets/clarity-legal-logo.png"; // ✅ Import the new logo image
 
 export default function About() {
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ export default function About() {
         <div className="logo">
           {/* ✅ Only image + text side by side */}
           <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
-          <span className="logo-text">Clarity Legal</span>
         </div>
         <div className="auth-buttons">
           {isLoggedIn ? (

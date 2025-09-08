@@ -22,9 +22,9 @@
   gap: 0.005rem;
 }
 
-/* ✅ New logo image styling */
+
 .logo-image {
-  height: 13rem; /* same as old icon size */
+  height: 4rem; 
   width: auto;
   object-fit: contain;
 }
