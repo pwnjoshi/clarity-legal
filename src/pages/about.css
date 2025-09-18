@@ -6,6 +6,17 @@
   background-color: #050509;
   color: #e0e0e0;
   font-family: Inter, sans-serif;
+  overflow-y: auto; /* Enable scrolling on about page */
+}
+
+/* Reset body overflow for about page */
+body.about-page {
+  overflow: auto !important;
+}
+
+/* Ensure proper scrolling behavior */
+html, body {
+  scroll-behavior: smooth;
 }
 
 /* Logo + Header */
@@ -22,9 +33,9 @@
   gap: 0.005rem;
 }
 
-
+/* ✅ New logo image styling */
 .logo-image {
-  height: 4rem; 
+  height: 4rem; /* same as old icon size */
   width: auto;
   object-fit: contain;
 }

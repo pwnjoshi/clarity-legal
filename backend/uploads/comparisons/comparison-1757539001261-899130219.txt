@@ -1,0 +1,29 @@
+SAMPLE LEGAL AGREEMENT - REVISED VERSION
+
+This Agreement is entered into between Party A and Party B.
+
+Clause 1: Payment Terms
+Payment shall be made within 45 days of invoice date.
+
+Clause 2: Termination
+Either party may terminate this agreement with 30 days written notice.
+
+Clause 3: Liability
+Each party shall be liable for their own actions and omissions, excluding gross negligence.
+
+Clause 4: Confidentiality  
+All confidential information shall be protected for a period of 5 years.
+
+Clause 5: Governing Law
+This agreement shall be governed by the laws of New York.
+
+Clause 6: Force Majeure
+Neither party shall be liable for delays due to circumstances beyond their control.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement.
+
+Party A: _________________________
+Date: ___________________________
+
+Party B: _________________________  
+Date: ___________________________

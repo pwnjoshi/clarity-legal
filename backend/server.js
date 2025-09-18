@@ -16,6 +16,8 @@ import {
 import { processWithGemini } from './services/geminiService.js';
 import { extractTextFromDocument } from './services/documentService.js';
 import { analyzeRisks } from './services/riskAnalyzer.js';
+import aiChatRoutes from './routes/ai-chat.js';
+import documentComparisonRoutes from './routes/document-comparison.js';
 
 // ES Module __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +36,12 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Mount AI chat routes
+app.use('/api/ai', aiChatRoutes);
+
+// Mount document comparison routes
+app.use('/api/compare', documentComparisonRoutes);
 
 // Create uploads directory if it doesn't exist
 const uploadDir = path.join(__dirname, 'uploads');
@@ -241,8 +249,15 @@ app.post('/api/upload', upload.single('document'), async (req, res) => {
     
     try {
       console.log('📄 Extracting text from uploaded document...');
-      extractedText = await extractTextFromDocument(req.file.path);
-      console.log(`✅ Text extraction successful (${extractedText.length} characters)`);
+      const rawText = await extractTextFromDocument(req.file.path);
+      console.log(`✅ Text extraction successful (${rawText.length} characters)`);
+      
+      // Apply AI formatting to make the text more readable
+      console.log('✨ Applying AI formatting to improve text presentation...');
+      const documentService = await import('./services/documentService.js');
+      extractedText = await documentService.default.formatDocumentText(rawText);
+      console.log(`✨ Text formatting completed (${extractedText.length} characters)`);
+      
     } catch (extractionError) {
       console.warn('⚠️ Text extraction failed:', extractionError.message);
       console.log('🔄 Using fallback text extraction...');
@@ -253,12 +268,12 @@ app.post('/api/upload', upload.single('document'), async (req, res) => {
         console.log(`✅ Fallback extraction successful (${extractedText.length} characters)`);
       } catch (fallbackError) {
         console.error('❌ Both extraction methods failed:', fallbackError.message);
-        // Provide specific error message based on file type
+        // Return a proper error response instead of continuing with error message as text
         const fileExt = path.extname(req.file.originalname).toLowerCase();
         let errorMessage = `Text extraction failed for ${req.file.originalname}. `;
         
         if (fileExt === '.pdf') {
-          errorMessage += 'This PDF may be image-based or protected. Try using a PDF with selectable text or enable OCR.';
+          errorMessage += 'This PDF may be image-based, protected, or corrupted. Please ensure it contains selectable text.';
         } else if (fileExt === '.doc') {
           errorMessage += 'Legacy .DOC format requires Document AI. Please convert to .DOCX format for better compatibility.';
         } else if (fileExt === '.docx') {
@@ -267,7 +282,11 @@ app.post('/api/upload', upload.single('document'), async (req, res) => {
           errorMessage += 'Please ensure the document contains readable text and try a supported format (PDF, DOCX, TXT).';
         }
         
-        extractedText = errorMessage;
+        return res.status(400).json({
+          success: false,
+          error: errorMessage,
+          details: fallbackError.message
+        });
       }
     }
 
@@ -551,6 +570,306 @@ app.get('/api/documents', async (req, res) => {
   }
 });
 
+// Clear all documents from storage (MUST come before :documentId route)
+app.delete('/api/documents/clear-all', async (req, res) => {
+  try {
+    console.log('🗑️ Starting clear all documents operation...');
+    
+    let deletedCount = 0;
+    let storageDeletedCount = 0;
+    let localFilesDeleted = 0;
+    let errors = [];
+    
+    // Clear local documents first
+    const localDocCount = localDocuments.size;
+    localDocuments.clear();
+    console.log(`🗑️ Cleared ${localDocCount} local documents from memory`);
+    
+    // Clear Firebase documents if available
+    if (firebaseInitialized) {
+      try {
+        const { getAllDocuments, deleteDocumentFromStorage, db } = await import('./config/firebase.js');
+        
+        // Get all documents first
+        const allDocuments = await getAllDocuments();
+        console.log(`📄 Found ${allDocuments.length} documents in Firebase to delete`);
+        
+        // Delete each document from storage and Firestore
+        for (const doc of allDocuments) {
+          try {
+            // Delete from Firebase Storage if stored in cloud
+            if (doc.storageInfo?.cloudStored && doc.storageInfo.fileName) {
+              try {
+                await deleteDocumentFromStorage(doc.storageInfo.fileName);
+                storageDeletedCount++;
+                console.log(`🗑️ Deleted file from storage: ${doc.storageInfo.fileName}`);
+              } catch (storageError) {
+                console.warn(`⚠️ Could not delete storage file ${doc.storageInfo.fileName}:`, storageError.message);
+              }
+            }
+            
+            // Delete metadata from Firestore
+            const docRef = db.collection('documents').doc(doc.id);
+            await docRef.delete();
+            
+            deletedCount++;
+            console.log(`✅ Deleted document: ${doc.id} - ${doc.originalName}`);
+            
+          } catch (docError) {
+            console.error(`❌ Error deleting document ${doc.id}:`, docError.message);
+            errors.push({
+              documentId: doc.id,
+              documentName: doc.originalName || 'Unknown',
+              error: docError.message
+            });
+          }
+        }
+        
+        // Alternative approach: Delete entire collection (more thorough)
+        console.log('🗑️ Performing collection-level cleanup...');
+        const documentsRef = db.collection('documents');
+        const batch = db.batch();
+        
+        const snapshot = await documentsRef.get();
+        snapshot.docs.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        
+        if (snapshot.docs.length > 0) {
+          await batch.commit();
+          console.log(`🗑️ Batch deleted ${snapshot.docs.length} remaining documents`);
+        }
+        
+      } catch (firebaseError) {
+        console.error('❌ Firebase clear operation failed:', firebaseError.message);
+        errors.push({
+          service: 'Firebase',
+          error: firebaseError.message
+        });
+      }
+    } else {
+      console.log('📋 Firebase not initialized - only cleared local documents');
+    }
+    
+    // Clean up local upload files
+    try {
+      const uploadFiles = await fs.readdir(uploadDir);
+      const documentFiles = uploadFiles.filter(file => 
+        file.endsWith('.pdf') || file.endsWith('.doc') || 
+        file.endsWith('.docx') || file.endsWith('.txt')
+      );
+      
+      for (const file of documentFiles) {
+        try {
+          await fs.unlink(path.join(uploadDir, file));
+          localFilesDeleted++;
+          console.log(`🗑️ Deleted local file: ${file}`);
+        } catch (fileError) {
+          console.warn(`⚠️ Could not delete local file ${file}:`, fileError.message);
+        }
+      }
+      
+      console.log(`🗑️ Cleaned up ${localFilesDeleted} local upload files`);
+    } catch (cleanupError) {
+      console.warn('⚠️ Local file cleanup failed:', cleanupError.message);
+    }
+    
+    const totalCleared = deletedCount + localDocCount;
+    
+    console.log(`✅ Clear all operation completed:`);
+    console.log(`  - Firebase documents: ${deletedCount}`);
+    console.log(`  - Storage files: ${storageDeletedCount}`);
+    console.log(`  - Local documents: ${localDocCount}`);
+    console.log(`  - Local files: ${localFilesDeleted}`);
+    console.log(`  - Total cleared: ${totalCleared}`);
+    
+    res.json({
+      success: true,
+      message: 'All documents cleared successfully',
+      deletedCount: totalCleared,
+      details: {
+        firebaseDeleted: deletedCount,
+        storageDeleted: storageDeletedCount,
+        localDeleted: localDocCount,
+        localFilesDeleted: localFilesDeleted,
+        errors: errors.length > 0 ? errors : undefined
+      }
+    });
+    
+  } catch (error) {
+    console.error('❌ Clear all documents error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      details: 'Failed to clear all documents'
+    });
+  }
+});
+
+// Force clear all documents (immediate, aggressive cleanup)
+app.delete('/api/documents/force-clear', async (req, res) => {
+  try {
+    console.log('💥 FORCE CLEARING ALL DOCUMENTS - AGGRESSIVE MODE...');
+    
+    let totalDeleted = 0;
+    
+    // Clear local documents immediately
+    const localCount = localDocuments.size;
+    localDocuments.clear();
+    totalDeleted += localCount;
+    console.log(`🗑️ Force cleared ${localCount} local documents`);
+    
+    // Force clear Firebase using batch operations
+    if (firebaseInitialized) {
+      try {
+        const { db } = await import('./config/firebase.js');
+        
+        // Get ALL documents in batches and delete them
+        const documentsRef = db.collection('documents');
+        let batch = db.batch();
+        let batchCount = 0;
+        let totalBatchDeleted = 0;
+        
+        const snapshot = await documentsRef.get();
+        console.log(`💥 Force deleting ${snapshot.size} Firebase documents`);
+        
+        for (const doc of snapshot.docs) {
+          batch.delete(doc.ref);
+          batchCount++;
+          
+          // Firebase batch limit is 500 operations
+          if (batchCount >= 500) {
+            await batch.commit();
+            totalBatchDeleted += batchCount;
+            console.log(`💥 Batch deleted ${batchCount} documents (total: ${totalBatchDeleted})`);
+            batch = db.batch();
+            batchCount = 0;
+          }
+        }
+        
+        // Commit remaining documents
+        if (batchCount > 0) {
+          await batch.commit();
+          totalBatchDeleted += batchCount;
+          console.log(`💥 Final batch deleted ${batchCount} documents`);
+        }
+        
+        totalDeleted += totalBatchDeleted;
+        console.log(`✅ Firebase force deletion completed: ${totalBatchDeleted} documents`);
+        
+      } catch (firebaseError) {
+        console.error('❌ Firebase force clear failed:', firebaseError.message);
+      }
+    }
+    
+    // Force delete ALL files in uploads directory
+    try {
+      const uploadFiles = await fs.readdir(uploadDir);
+      let filesDeleted = 0;
+      
+      for (const file of uploadFiles) {
+        try {
+          const filePath = path.join(uploadDir, file);
+          const stats = await fs.stat(filePath);
+          
+          if (stats.isFile()) {
+            await fs.unlink(filePath);
+            filesDeleted++;
+          }
+        } catch (fileError) {
+          console.warn(`⚠️ Could not delete ${file}:`, fileError.message);
+        }
+      }
+      
+      console.log(`💥 Force deleted ${filesDeleted} upload files`);
+    } catch (cleanupError) {
+      console.warn('⚠️ Upload cleanup failed:', cleanupError.message);
+    }
+    
+    console.log(`💥 FORCE CLEAR COMPLETED - ${totalDeleted} documents removed`);
+    
+    res.json({
+      success: true,
+      message: 'Force clear completed - all documents destroyed',
+      deletedCount: totalDeleted,
+      mode: 'AGGRESSIVE_FORCE_CLEAR'
+    });
+    
+  } catch (error) {
+    console.error('❌ Force clear error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Re-analyze document endpoint
+app.post('/api/documents/:documentId/reanalyze', async (req, res) => {
+  try {
+    const { documentId } = req.params;
+    
+    console.log(`Re-analyzing document: ${documentId}`);
+    
+    if (!firebaseInitialized) {
+      return res.status(503).json({
+        success: false,
+        error: 'Cloud storage not available'
+      });
+    }
+    
+    // Get document metadata
+    const { getDocumentMetadata, db } = await import('./config/firebase.js');
+    const docMetadata = await getDocumentMetadata(documentId);
+    
+    if (!docMetadata) {
+      return res.status(404).json({
+        success: false,
+        error: 'Document not found'
+      });
+    }
+    
+    // Update document status to processing
+    const docRef = db.collection('documents').doc(documentId);
+    await docRef.update({
+      status: 'processing',
+      lastReanalyzed: new Date().toISOString()
+    });
+    
+    // Start re-analysis process asynchronously
+    setImmediate(async () => {
+      try {
+        // Import document service for reanalysis
+        const { reanalyzeDocument } = await import('./services/documentService.js');
+        await reanalyzeDocument(documentId, docMetadata);
+        
+        console.log(`Re-analysis completed for document: ${documentId}`);
+      } catch (error) {
+        console.error(`Re-analysis failed for document ${documentId}:`, error);
+        
+        // Update status to error on failure
+        await docRef.update({
+          status: 'error',
+          errorMessage: error.message
+        });
+      }
+    });
+    
+    res.json({
+      success: true,
+      message: 'Document re-analysis started',
+      documentId: documentId
+    });
+    
+  } catch (error) {
+    console.error('Error starting re-analysis:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Delete document from cloud storage
 app.delete('/api/documents/:documentId', async (req, res) => {
   try {
@@ -576,7 +895,7 @@ app.delete('/api/documents/:documentId', async (req, res) => {
     const docRef = db.collection('documents').doc(documentId);
     await docRef.delete();
     
-    console.log(`🗑️ Document deleted: ${documentId}`);
+    console.log(`Document deleted: ${documentId}`);
     
     res.json({
       success: true,
@@ -584,7 +903,7 @@ app.delete('/api/documents/:documentId', async (req, res) => {
     });
     
   } catch (error) {
-    console.error('❌ Error deleting document:', error);
+    console.error('Error deleting document:', error);
     res.status(500).json({
       success: false,
       error: error.message

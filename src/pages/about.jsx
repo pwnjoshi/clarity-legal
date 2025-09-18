@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Star,
   FileText,
@@ -25,7 +25,32 @@ import logoImg from "../assets/clarity-legal-logo.png"; // ✅ Import the new lo
 export default function About() {
   const navigate = useNavigate();
   const [showLangMenu, setShowLangMenu] = useState(false);
-  const { isLoggedIn } = useAuth(); // ✅ get logged-in user
+  const { isLoggedIn, user, logout } = useAuth(); // ✅ get logged-in user and logout function
+
+  // Enable scrolling on About page
+  useEffect(() => {
+    document.body.classList.add('about-page');
+    return () => {
+      document.body.classList.remove('about-page');
+    };
+  }, []);
+
+  const handleTryForFree = () => {
+    if (isLoggedIn) {
+      navigate('/dashboard');
+    } else {
+      navigate('/login');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <div className="dark-container">
@@ -34,10 +59,25 @@ export default function About() {
         <div className="logo">
           {/* ✅ Only image + text side by side */}
           <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
+          <div className="logo-content">
+          </div>
         </div>
         <div className="auth-buttons">
           {isLoggedIn ? (
-            <button className="auth-btn profile-btn">Profile</button>
+            <>
+              <button 
+                className="auth-btn profile-btn"
+                onClick={() => navigate('/dashboard')}
+              >
+                Dashboard
+              </button>
+              <button 
+                className="auth-btn login-btn"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <button
@@ -60,8 +100,8 @@ export default function About() {
       <main className="about-main">
         <h1 className="heading">Welcome to Clarity Legal</h1>
 
-        {/* ✅ Updated navigation to /login */}
-        <button className="try-btn" onClick={() => navigate("/login")}>
+        {/* ✅ Updated navigation logic */}
+        <button className="try-btn" onClick={handleTryForFree}>
           ✨ Try for Free
         </button>
 

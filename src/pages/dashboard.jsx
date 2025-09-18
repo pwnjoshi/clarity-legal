@@ -85,14 +85,14 @@ export default function Dashboard() {
       <header className="dashboard-header">
         <div className="logo-section">
           <div className="logo">
-            {/* ✅ Only image, no text */}
+            {/* ✅ Only image + text, no emoji */}
             <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
           </div>
         </div>
 
         {/* Left Navbar */}
         <nav className="nav-left">
-          <Link to="/dashboard" className="nav-btn">Dashboard</Link>
+          <Link to="/dashboard" className="nav-btn">Home</Link>
           <a href="#" className="nav-btn">Pricing</a>
         </nav>
 
@@ -131,7 +131,7 @@ export default function Dashboard() {
 
         {/* Content */}
         <section className="content">
-          <h1 className="page-title">Legal Document Analysis</h1>
+          <h1 className="page-title">Legal Document Decoder</h1>
           <p className="page-subtitle">
             Transform complex legal language into clear, human-readable text
           </p>
@@ -285,6 +285,8 @@ export default function Dashboard() {
                 <button
                   onClick={() => {
                     if (processedResult.document?.id) {
+                      // Store the processed result in sessionStorage for the document viewer
+                      sessionStorage.setItem('processedDocument', JSON.stringify(processedResult));
                       window.open(`/document/${processedResult.document.id}`, '_blank');
                     } else {
                       alert('⚠️ Document ID not available for detailed analysis');

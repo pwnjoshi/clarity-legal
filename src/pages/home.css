@@ -1,4 +1,4 @@
-.dashboard-container {
+.home-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -8,7 +8,7 @@
 }
 
 /* Header */
-.dashboard-header {
+.home-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,7 +34,7 @@
 
 /* ✅ New logo image styling */
 .logo-image {
-  height: 4rem; /* same as about page */
+  height: 2rem; /* same as about page */
   width: auto;
   object-fit: contain;
 }
@@ -202,7 +202,7 @@
 }
 
 /* Main */
-.dashboard-main {
+.home-main {
   display: flex;
   flex: 1;
   overflow: hidden;
