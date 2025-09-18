@@ -2,29 +2,38 @@
 
 **AI-Powered Legal Document Analysis Platform**
 
-Transform complex legal documents into clear, human-readable text with advanced AI analysis and risk assessment.
+Transform complex legal documents into clear, human-readable text with advanced AI analysis and risk assessment. Features integrated AI chat, research capabilities, and document comparison tools.
 
 ## ✨ Features
+
+### 🚀 New AI-Powered Tools
+- 💬 **AI Chat Assistant**: Interactive AI chat with typing animations and professional dark theme
+- 🔬 **AI Research Panel**: Integrated research tool with typing cursor effects and search history
+- 📊 **Document Comparison**: Side-by-side document analysis and comparison capabilities
+- 🎯 **Smart Analysis**: Enhanced document re-analysis with fixed risk assessment
 
 ### Core Functionality
 - 📄 **Enhanced Document Upload**: Support for PDF, DOC, DOCX, and TXT files (up to 10MB)
 - 🤖 **AI Analysis**: Google Gemini AI converts legal jargon to plain English
 - 🔍 **Advanced Text Extraction**: Google Cloud Document AI with OCR detection
-- ⚠️ **Risk Assessment**: Comprehensive risk analysis with detailed factors
+- ⚠️ **Risk Assessment**: Comprehensive risk analysis with detailed factors and recommendations
 - ☁️ **Cloud Storage**: Secure Firebase Storage for document management
 - 📊 **Interactive Document Dashboard**: Real-time document tracking and management
 
 ### Enhanced User Experience
 - 📱 **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- 🎨 **Modern UI**: Glass morphism effects and smooth animations
-- 🖥️ **Improved Layout**: Better header alignment and component spacing
-- ⚡ **Performance**: Smooth transitions and optimized loading states
+- 🎨 **Modern UI**: Professional dark theme with orange accents and glass morphism effects
+- 🖥️ **Improved Layout**: Clean header design and enhanced component spacing
+- ⚡ **Performance**: Smooth transitions, typing animations, and optimized loading states
+- 🏠 **New Homepage**: Modern landing page with professional branding
 
-### Document Processing
+### Document Processing & Analysis
 - 🔄 **Smart Text Cleaning**: Advanced PDF text extraction with artifact removal
 - 📋 **Formatted Analysis View**: Properly organized text with sections and paragraphs
 - 🎯 **Highlighted Sections**: Interactive text highlighting with explanations
 - 🔍 **OCR Detection**: Identifies scanned PDFs requiring OCR processing
+- 🔧 **Re-Analysis**: Fixed re-analyze functionality with proper status management
+- 🤖 **AI Chat Integration**: Contextual document assistance in sidebar
 
 ## 🚀 Quick Start
 
@@ -81,7 +90,10 @@ npm start
 │                 │    │                 │    │                 │
 │ • File Upload   │    │ • File Processing│   │ • Document AI   │
 │ • Document View │    │ • AI Integration│    │ • Gemini AI     │
-│ • Dashboard     │    │ • Firebase SDK  │    │ • Firebase      │
+│ • AI Chat       │    │ • Document Comp │    │ • Firebase      │
+│ • AI Research   │    │ • AI Chat Routes│    │ • Storage       │
+│ • Doc Compare   │    │ • Risk Analysis │    │ • Firestore     │
+│ • Dashboard     │    │ • Firebase SDK  │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
@@ -91,14 +103,31 @@ npm start
 clarity-legal-main/
 ├── src/                    # Frontend source code
 │   ├── components/         # React components
+│   │   ├── AIChat.jsx      # AI chat assistant component
+│   │   ├── AIResearch.jsx  # AI research panel component
+│   │   ├── DocumentComparison.jsx # Document comparison tool
+│   │   ├── DocumentDisplay.jsx    # Enhanced document viewer
+│   │   └── DocumentDashboard.jsx  # Document management
 │   ├── pages/             # Page components
+│   │   ├── home.jsx        # New modern homepage
+│   │   ├── DocumentViewer.jsx # Enhanced document viewer
+│   │   ├── dashboard.jsx   # Updated dashboard
+│   │   └── about.jsx       # About/landing page
 │   └── services/          # API client
 ├── backend/               # Backend API server
 │   ├── config/           # Firebase configuration
+│   ├── routes/           # API route handlers
+│   │   ├── ai-chat.js      # AI chat API routes
+│   │   └── document-comparison.js # Document comparison API
 │   ├── services/         # Business logic services
-│   ├── uploads/          # Temporary file uploads
-│   └── server.js         # Express server
+│   │   ├── documentService.js     # Enhanced document processing
+│   │   ├── documentComparisonService.js # Comparison logic
+│   │   ├── geminiService.js       # AI analysis service
+│   │   └── riskAnalyzer.js        # Fixed risk analysis
+│   ├── uploads/          # Temporary file uploads & comparisons
+│   └── server.js         # Enhanced Express server
 ├── package.json          # Frontend dependencies
+├── PROJECT_DOCUMENTATION.md # Complete technical docs
 └── README.md            # This file
 ```
 
@@ -131,9 +160,9 @@ clarity-legal-main/
 - **Performance Optimization** - Efficient loading and caching strategies
 - **Accessibility** - WCAG compliant with focus states and screen reader support
 
-## 📖 API Documentation
+## 📆 API Documentation
 
-### Upload Document
+### Document Processing
 ```http
 POST /api/upload
 Content-Type: multipart/form-data
@@ -143,19 +172,57 @@ Body:
 - docType: string (optional)
 ```
 
-### Get Documents
 ```http
-GET /api/documents
+POST /api/documents/:id/reanalyze
+Content-Type: application/json
+
+Response: Updated document analysis
 ```
 
-### Get Document Details
+### Document Management
+```http
+GET /api/documents
+Response: List of all processed documents
+```
+
 ```http
 GET /api/documents/:id
+Response: Specific document details and analysis
+```
+
+### AI Services
+```http
+POST /api/ai-chat
+Content-Type: application/json
+
+Body:
+- message: string
+- documentId: string (optional)
+```
+
+```http
+POST /api/ai-research
+Content-Type: application/json
+
+Body:
+- query: string
+- context: string (optional)
+```
+
+### Document Comparison
+```http
+POST /api/compare-documents
+Content-Type: multipart/form-data
+
+Body:
+- originalDocument: file
+- comparisonDocument: file
 ```
 
 ### Health Check
 ```http
 GET /api/health
+Response: Server status and service connectivity
 ```
 
 ## 🔧 Configuration
@@ -226,26 +293,33 @@ For questions and support:
 
 ---
 
-## 🆕 What's New in v1.2.0
+## 🆕 What's New in v2.0.0 - Major Feature Update
 
-### UI/UX Improvements
-- ✨ Removed branding text for cleaner header design
-- 🎨 Enhanced button styling with improved hover effects
-- 🖥️ Better header alignment and component spacing
-- 📱 Improved responsive design for mobile and tablet
-- ⚡ Smoother animations and transitions throughout
+### 🚀 New AI-Powered Components
+- 💬 **AI Chat Assistant**: Integrated conversational AI with typing animations and professional dark theme
+- 🔬 **AI Research Panel**: Comprehensive research tool with typing cursor effects and search history in document viewer sidebar
+- 📊 **Document Comparison**: Advanced side-by-side document analysis and comparison capabilities
+- 🏠 **New Homepage**: Modern landing page with professional branding and enhanced navigation
+- 📄 **Enhanced Document Display**: Improved document viewer with better formatting and interactivity
 
-### Document Processing Enhancements
-- 🔄 Advanced PDF text cleaning and artifact removal
-- 📋 Improved text formatting in analysis view with proper paragraphs
-- 🎯 Better section header and list formatting
-- 🔍 Enhanced OCR detection for scanned documents
-- 🛠️ More robust error handling and user feedback
+### 🔧 Backend Improvements
+- 🎯 **Fixed Re-Analysis**: Resolved re-analyze button functionality with proper `riskAnalyzer.analyzeRisks()` method calls
+- 🚀 **New API Endpoints**: Added AI chat, research, and document comparison services
+- 📊 **Enhanced Document Service**: Improved risk analysis mapping and error handling
+- 🛡️ **Better Status Management**: Proper document processing status tracking
 
-### Performance & Accessibility
-- ⏱️ Optimized loading states and transitions
-- 🖥️ Custom scrollbar styling for better UX
-- ♿ Improved focus states for keyboard navigation
-- 📊 Better document dashboard with enhanced filtering
+### 🎨 UI/UX Enhancements
+- 🎆 **Consistent Dark Theme**: Professional dark theme with orange accents across all components
+- ✨ **Typing Animations**: Realistic typing effects for AI responses with dynamic speed and pauses
+- 🖥️ **Cleaner Design**: Removed branding text, improved header alignment and component spacing
+- 📱 **Enhanced Responsive Design**: Better mobile and tablet experience with touch-friendly interfaces
+- 🌊 **Glass Morphism**: Modern backdrop blur effects and smooth transitions
+- ♿ **Accessibility**: Improved keyboard navigation and focus states
 
-**Status**: ✅ Production Ready | **Version**: 1.2.0 | **Last Updated**: September 2025
+### 📈 Technical Improvements
+- 🔄 **Enhanced Processing**: Advanced PDF text cleaning and OCR detection
+- 🛠️ **Better Error Handling**: Comprehensive error detection and user feedback
+- 🎨 **Performance**: Optimized loading states and smooth animations
+- 📋 **Formatted Display**: Proper text organization with sections and paragraphs
+
+**Status**: ✅ Production Ready | **Version**: 2.0.0 | **Last Updated**: September 2024
