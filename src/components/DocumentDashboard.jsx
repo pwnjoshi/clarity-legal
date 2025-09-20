@@ -123,6 +123,8 @@ export default function DocumentDashboard() {
 
   const handleDocumentClick = (doc) => {
     if (doc.status === 'processed') {
+      // Using navigate is compatible with both HashRouter and BrowserRouter
+      // as it's aware of the router context
       navigate(`/document/${doc.id}`);
     }
   };

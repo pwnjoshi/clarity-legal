@@ -1,4 +1,6 @@
 import React from "react";
+// Using HashRouter for better compatibility with static hosting and direct URL access
+// URLs will include a hash (#) symbol, e.g., http://localhost:5173/#/document/123
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import Home from "./pages/home";

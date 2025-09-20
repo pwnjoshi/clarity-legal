@@ -86,7 +86,7 @@ export default function Footer() {
               </div>
               <div className="contact-item">
                 <MapPin className="contact-icon" />
-                <span>Bangalore, India</span>
+                <span>Dehradun, India</span>
               </div>
             </div>
             

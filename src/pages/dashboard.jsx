@@ -4,6 +4,7 @@ import "./dashboard.css";
 import apiService from "../services/apiService.js";
 import DocumentDashboard from "../components/DocumentDashboard.jsx";
 import DashboardHeader from "../components/DashboardHeader.jsx";
+import { getExternalUrl } from "../utils/routeUtils.js";
 
 export default function Dashboard() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -236,7 +237,8 @@ export default function Dashboard() {
                     if (processedResult.document?.id) {
                       // Store the processed result in sessionStorage for the document viewer
                       sessionStorage.setItem('processedDocument', JSON.stringify(processedResult));
-                      window.open(`/document/${processedResult.document.id}`, '_blank');
+                      // Use our utility function for consistent external URLs
+                      window.open(getExternalUrl(`/document/${processedResult.document.id}`), '_blank');
                     } else {
                       alert('⚠️ Document ID not available for detailed analysis');
                     }

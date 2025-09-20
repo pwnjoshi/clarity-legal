@@ -302,9 +302,29 @@ For complete development documentation, architecture details, and troubleshootin
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🔧 Troubleshooting
+
+If you encounter issues with the application, check these resources:
+
+- [LOCAL_DEVELOPMENT.md](./LOCAL_DEVELOPMENT.md) - Solutions for common local development issues
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide for Vercel
+- [ROUTE_REFRESH_FIX.md](./ROUTE_REFRESH_FIX.md) - Fixing 404 errors when refreshing routes
+- [deployment-checklist.md](./deployment-checklist.md) - Comprehensive troubleshooting checklist
+- [ENV_SETUP.md](./ENV_SETUP.md) - Environment variable configuration guide
+
+Common issues and solutions:
+1. **"Failed to fetch" errors**: Check your backend is running and environment variables are set correctly
+2. **404 errors on route refresh**: Follow the fix in ROUTE_REFRESH_FIX.md
+3. **Document processing issues**: Verify Firebase credentials and backend services
+
+For debugging tools:
+- Use the browser's developer console (F12) to check for CORS and API errors
+- Check the backend console for detailed processing logs
+
 ## 🆘 Support
 
 For questions and support:
+- Check the troubleshooting guides listed above
 - Check the [PROJECT_DOCUMENTATION.md](./PROJECT_DOCUMENTATION.md) for detailed guides
 - Open an issue for bug reports
 - Contact the development team for feature requests

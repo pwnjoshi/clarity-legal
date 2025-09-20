@@ -47,7 +47,9 @@ backend/uploads/*
 
 
 
-#.env vercel files
+# Vercel environment files
 vercel-frontend.env
 vercel-backend.env
+
+# Not needed in repo
 ENVIRONMENT_SETUP.md
