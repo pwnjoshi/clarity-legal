@@ -24,7 +24,24 @@ npm run dev
    - Name: `VITE_API_BASE_URL`
    - Value: Your production API URL (e.g., `https://we-are-clarity-legal.vercel.app`)
 
-3. Save the changes and redeploy your application.
+3. Ensure the `vercel.json` file exists in your project root with the following content to handle client-side routing and prevent 404 errors on page refresh:
+
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "routes": [
+    { 
+      "src": "/[^.]+", 
+      "dest": "/index.html", 
+      "status": 200 
+    }
+  ]
+}
+```
+
+4. Save the changes and redeploy your application.
 
 ## How It Works
 
