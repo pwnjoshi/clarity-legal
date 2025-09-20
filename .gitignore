@@ -14,9 +14,11 @@ dist-ssr
 *.local
 
 # Environment variables
-.env
-.env.*
-!.env.example
+# Public .env file is included for Vercel deployment
+# .env
+.env.local
+.env.development
+.env.production
 backend/.env
 backend/.env.*
 !backend/.env.example
