@@ -22,7 +22,6 @@ backend/.env.*
 !backend/.env.example
 
 # Firebase config with sensitive data
-src/firebaseConfig.js
 backend/config/firebase-service-account.json
 
 # Editor directories and files
