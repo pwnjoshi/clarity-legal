@@ -44,3 +44,10 @@ backend/uploads/*
 *.pem
 *.key
 *.p12
+
+
+
+#.env vercel files
+vercel-frontend.env
+vercel-backend.env
+ENVIRONMENT_SETUP.md

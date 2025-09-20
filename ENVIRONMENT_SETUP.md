@@ -13,8 +13,15 @@ This document explains how to set up the required environment variables for both
 
 ### For Vercel Deployment
 
-Add the following environment variables in your Vercel project settings:
+You have two options for setting up environment variables in Vercel:
 
+#### Option 1: Import .env File (Recommended)
+1. In the Vercel project settings, go to "Environment Variables"
+2. Look for the "Import" button (usually in the top-right)
+3. Click it and upload the `vercel-frontend.env` file from your project
+
+#### Option 2: Manual Entry
+Add the following environment variable manually in your Vercel project settings:
 1. `VITE_API_BASE_URL` - Your production API URL (e.g., `https://clarity-legal-api.vercel.app`)
 
 ## Backend Environment Variables
@@ -61,7 +68,15 @@ LOG_LEVEL=info
 
 ### For Vercel Deployment (Backend)
 
-Add the same environment variables to your backend Vercel project settings.
+You have two options for setting up environment variables in Vercel:
+
+#### Option 1: Import .env File (Recommended)
+1. In the Vercel project settings for your backend deployment, go to "Environment Variables"
+2. Look for the "Import" button (usually in the top-right)
+3. Click it and upload the `vercel-backend.env` file from your project
+
+#### Option 2: Manual Entry
+Add all the environment variables listed in the `vercel-backend.env` file to your backend Vercel project settings.
 
 ## Firebase Configuration
 
