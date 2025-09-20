@@ -4,7 +4,7 @@
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "cleanUrls": true,
-  "buildCommand": "npm run build",
+  "buildCommand": "chmod +x ./vercel-build.sh && ./vercel-build.sh",
   "devCommand": "npm run dev",
   "installCommand": "npm install"
 }
