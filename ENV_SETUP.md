@@ -30,13 +30,6 @@ npm run dev
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "routes": [
-    { 
-      "src": "/[^.]+", 
-      "dest": "/index.html", 
-      "status": 200 
-    }
   ]
 }
 ```
