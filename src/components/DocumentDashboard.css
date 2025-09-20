@@ -123,6 +123,10 @@
   border-radius: 0.75rem;
   padding: 1rem;
   transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 .doc-card.clickable {
@@ -136,6 +140,11 @@
 
 .doc-title {
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin-bottom: 4px;
 }
 
 .doc-type {

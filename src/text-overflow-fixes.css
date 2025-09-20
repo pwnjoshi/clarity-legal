@@ -1,0 +1,49 @@
+/* Text overflow fixes for document titles and text elements */
+
+/* Document Viewer Title */
+.document-viewer-container .document-title {
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.document-viewer-container .document-title:hover {
+  color: #8d6ff0;
+}
+
+/* Make sure all document titles have proper text overflow handling */
+.document-title {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+
+/* Document card improvements throughout the application */
+.doc-card {
+  transition: all 0.2s ease;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+.doc-card:hover {
+  border-color: #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Document title hover effects */
+.doc-title:hover {
+  color: #8d6ff0;
+}
+
+/* Improve text display in modal headers and dialogs */
+.modal-title, .dialog-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

@@ -1,4 +1,7 @@
-/* Enhanced Document Display CSS - Dark Theme */
+/* 
+ * SIMPLIFIED Document Display CSS - Dark Theme
+ * Modified for text visibility
+ */
 
 :root {
     --doc-bg-primary: #1f1f1f;
@@ -26,7 +29,8 @@
     background-color: var(--doc-bg-primary);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: auto;
+    position: static;
 }
 
 /* === DOCUMENT HEADER === */
@@ -118,31 +122,41 @@
 /* === DOCUMENT TEXT CONTAINER === */
 .document-text-container {
     flex: 1;
-    padding: 40px 48px;
+    padding: 20px;
     background-color: var(--doc-bg-primary);
     overflow-y: auto;
     margin: 0;
     max-width: none;
     line-height: 1.7;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: 0.01em;
+    color: var(--doc-text-primary);
+    position: static;
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .document-paragraph {
+    display: block;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.8;
     color: var(--doc-text-primary);
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     text-align: left;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    word-break: break-word;
-    hyphens: auto;
+    word-break: normal;
     max-width: 100%;
     white-space: pre-wrap;
-    text-indent: 0;
-    padding: 0;
-    transition: background-color 0.2s ease;
+    padding-left: 10px;
+    border-left: 2px solid var(--doc-border-color);
+    border-radius: 4px;
+    position: static;
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Document content type styles - Multiple selectors for maximum specificity */
@@ -200,6 +214,12 @@ p.document-paragraph.document-title,
     line-height: 1.6;
     color: var(--doc-text-primary);
     position: relative;
+}
+
+/* Make numbered list prefixes black */
+.document-paragraph.list-item > span:first-child {
+    color: #ff5f5f !important;
+    font-weight: 600;
 }
 
 .document-paragraph.list-item:before {
@@ -317,7 +337,7 @@ p.document-paragraph.document-title,
 
 /* Hover Effects - Subtle */
 .modern-highlight:hover {
-    background-opacity: 0.15;
+    /* background-opacity: 0.15; */
     z-index: 10;
 }
 
@@ -1026,6 +1046,7 @@ p.document-paragraph.document-title,
     .document-title {
         background: linear-gradient(135deg, #e2e8f0 0%, #90cdf4 100%);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 }

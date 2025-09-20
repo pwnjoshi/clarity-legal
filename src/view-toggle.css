@@ -1,0 +1,84 @@
+/* 
+ * VIEW TOGGLE STYLES - Version 1
+ * Styles for the document view toggle buttons and container
+ */
+
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  margin: 15px auto;
+  background: var(--bg-tertiary);
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  max-width: 320px;
+}
+
+.toggle-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 140px;
+}
+
+.toggle-btn.active {
+  background: linear-gradient(135deg, #8d6ff0 0%, #6366f1 100%);
+  color: white;
+  box-shadow: 0 2px 10px rgba(141, 111, 240, 0.3);
+}
+
+.toggle-btn:not(.active):hover {
+  background: rgba(141, 111, 240, 0.1);
+  color: var(--text-primary);
+}
+
+.toggle-btn svg {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+/* Tooltip for toggle buttons */
+.toggle-btn-tooltip {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  border: 1px solid var(--border-color);
+}
+
+.toggle-btn:hover .toggle-btn-tooltip {
+  opacity: 1;
+}
+
+/* Added styles for different view modes */
+.document-view-mode-indicator {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.document-view-mode-indicator:hover {
+  opacity: 1;
+}

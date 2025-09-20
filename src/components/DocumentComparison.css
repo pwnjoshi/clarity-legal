@@ -156,6 +156,11 @@
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: all 0.2s ease;
 }
 
 .document-meta {
@@ -252,6 +257,11 @@
     color: var(--comparison-text-primary);
     font-weight: 500;
     margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: all 0.2s ease;
 }
 
 .file-size {
@@ -493,6 +503,10 @@
     color: var(--comparison-text-primary);
     font-size: 1rem;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .panel-header .document-name {

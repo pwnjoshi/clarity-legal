@@ -1,0 +1,112 @@
+/* 
+ * DOCUMENT TEXT DISPLAY - Version 3
+ * Complete styling to ensure ALL text is visible and properly formatted
+ */
+
+/* Main document container - make sure it's visible */
+.enhanced-document-display {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  width: 100% !important;
+  overflow: auto !important;
+  position: static !important;
+  background-color: #1a1a1a !important;
+}
+
+/* Content container */
+.document-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  overflow: auto !important;
+  background-color: #1a1a1a !important;
+  position: static !important;
+}
+
+/* Text container */
+.document-text-container {
+  padding: 20px !important;
+  flex: 1 !important;
+  overflow-y: auto !important;
+  color: #e0e0e0 !important;
+  position: static !important;
+  max-height: none !important;
+  max-width: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Basic text visibility styling */
+.document-paragraph {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  color: #e0e0e0 !important;
+  margin-bottom: 15px !important;
+  border-left: 2px solid #333 !important;
+  padding-left: 10px !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  text-align: left !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Ensure title is visible */
+.document-paragraph.document-title {
+  color: #ffffff !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+}
+
+/* Make sure spans inside paragraphs are visible */
+.document-paragraph span {
+  color: inherit !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline !important;
+  position: static !important;
+}
+
+/* Force inline display for spans */
+span {
+  display: inline !important;
+}
+
+/* Tooltips and highlights */
+.modern-highlight {
+  background-color: rgba(73, 83, 120, 0.2) !important;
+  border-bottom: 2px solid #4dd0ff !important;
+  color: #e0e0e0 !important;
+  padding: 0 2px !important;
+  margin: 0 1px !important;
+  border-radius: 2px !important;
+  cursor: help !important;
+  display: inline !important;
+  visibility: visible !important;
+  position: static !important;
+}
+
+.highlight-text {
+  color: #e0e0e0 !important;
+  visibility: visible !important;
+  display: inline !important;
+}
+
+.highlight-indicator {
+  color: #4dd0ff !important;
+  font-size: 8px !important;
+  vertical-align: super !important;
+  margin-left: 1px !important;
+  visibility: visible !important;
+  display: inline !important;
+}
+
+/* This will reset any problematic container styling */
+.document-text-container::before,
+.document-text-container::after {
+  display: none !important;
+  content: none !important;
+}

@@ -1,0 +1,151 @@
+/* 
+ * Document Text Formatting Improvements
+ * This file contains additional styling to improve the appearance 
+ * of text extracted from PDFs and other documents
+ */
+
+/* Enhanced document text container styling */
+.document-text-container {
+  /* Improved readability with spacing */
+  column-width: auto !important;
+  column-count: 1 !important;
+  column-gap: 0 !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  background-color: #1a1a1a !important;
+  border: 1px solid #333 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+  padding: 40px 60px !important;
+}
+
+/* Paragraphs in extracted text */
+.document-paragraph {
+  padding: 6px 10px !important;
+  margin-bottom: 18px !important;
+  background-color: #1f1f1f !important;
+  border-left: 2px solid #333 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-left-color 0.2s ease !important;
+}
+
+/* Style specifically for document titles */
+.document-paragraph.document-title {
+  background-color: #252525 !important;
+  border-left: 3px solid #8d6ff0 !important;
+  font-weight: 700 !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  font-size: 17px !important;
+  margin-top: 25px !important;
+  margin-bottom: 20px !important;
+}
+
+/* Style for clause headers */
+.document-paragraph.clause-header {
+  background-color: #222 !important;
+  border-left: 3px solid #4dd0ff !important;
+  font-weight: 600 !important;
+  color: #4dd0ff !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+/* Style for list items */
+.document-paragraph.list-item {
+  background-color: #1d1d1d !important;
+  border-left: 2px solid #555 !important;
+}
+
+/* Style for signature lines */
+.document-paragraph.signature-line {
+  background-color: #232323 !important;
+  border-left: 2px solid #666 !important;
+  font-style: italic !important;
+  color: #aaa !important;
+}
+
+.document-paragraph:hover {
+  background-color: #252525 !important;
+  border-left-color: #4dd0ff !important;
+  transform: translateX(2px) !important;
+}
+
+/* Fix specific formatting issues for PDF extracted text */
+.document-paragraph {
+  /* Prevent awkward line breaks */
+  word-spacing: normal !important;
+  /* Fix text justification issues */
+  text-align: left !important;
+  /* Ensure consistent letter spacing */
+  letter-spacing: 0.01em !important;
+  /* Better font rendering */
+  text-rendering: optimizeLegibility !important;
+}
+
+/* Fix for dense blocks of text */
+.document-paragraph:not(.empty-line):not(.document-title):not(.clause-header) {
+  text-indent: 0.5em !important;
+  line-height: 1.8 !important;
+}
+
+/* Add a paper-like effect to the document container */
+.document-content {
+  position: relative !important;
+  background: linear-gradient(to bottom, #1a1a1a, #1f1f1f) !important;
+}
+
+/* Add a subtle header to the document */
+.document-text-container::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 8px !important;
+  background: linear-gradient(to right, #4dd0ff, #8d6ff0) !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  opacity: 0.7 !important;
+}
+
+/* Better styling for section headers within documents */
+.document-paragraph strong,
+.document-paragraph b {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+/* Make numbered and bullet lists more visible */
+.document-paragraph.list-item {
+  padding-left: 24px !important;
+  position: relative !important;
+}
+
+/* Specific style for extracted document terms and definitions */
+.document-paragraph em,
+.document-paragraph i {
+  font-style: italic !important;
+  color: #bbb !important;
+}
+
+.document-paragraph.definition-term {
+  border-left: 2px solid #4dd0ff !important;
+  background-color: rgba(77, 208, 255, 0.05) !important;
+  padding-left: 15px !important;
+  font-weight: 500 !important;
+}
+
+/* Make tables and tabular data more readable */
+.document-text-container table,
+.document-text-container pre {
+  width: 100% !important;
+  overflow-x: auto !important;
+  display: block !important;
+  background: #222 !important;
+  border: 1px solid #333 !important;
+  border-radius: 4px !important;
+  margin: 15px 0 !important;
+  padding: 10px !important;
+}

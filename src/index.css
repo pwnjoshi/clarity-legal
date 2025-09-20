@@ -77,3 +77,9 @@ button:active {
 ::-webkit-scrollbar-thumb:hover {
   background: #666;
 }
+
+/* -------------- Loading Animation -------------- */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

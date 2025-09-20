@@ -112,7 +112,7 @@ clarity-legal-main/
 │   │   ├── home.jsx        # New modern homepage
 │   │   ├── DocumentViewer.jsx # Enhanced document viewer
 │   │   ├── dashboard.jsx   # Updated dashboard
-│   │   └── about.jsx       # About/landing page
+│   │   └── home.jsx        # Home/landing page
 │   └── services/          # API client
 ├── backend/               # Backend API server
 │   ├── config/           # Firebase configuration

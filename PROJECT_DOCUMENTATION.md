@@ -61,8 +61,8 @@ clarity-legal-main/
 │   ├── pages/
 │   │   ├── home.jsx                # New modern homepage
 │   │   ├── home.css                # Homepage styling
-│   │   ├── about.jsx               # Enhanced landing/about page
-│   │   ├── about.css               # About page styling
+│   │   ├── home.jsx                # Enhanced landing/home page
+│   │   ├── home.css                # Home page styling
 │   │   ├── dashboard.jsx           # Updated dashboard page
 │   │   ├── dashboard.css           # Dashboard page styling
 │   │   ├── DocumentViewer.jsx      # Enhanced document analysis viewer

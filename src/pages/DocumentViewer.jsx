@@ -456,7 +456,6 @@ Comprehensive analysis of ${query} reveals several key considerations for legal 
                         <div className="chat-messages">
                             {chatMessages.length === 0 ? (
                                 <div className="chat-welcome">
-                                    <div className="welcome-icon">🤖</div>
                                     <h4>ClarityLegal AI Assistant</h4>
                                     <p>I'm your professional legal document analyst. Ask me about clauses, risks, compliance issues, or negotiation strategies for this document.</p>
                                     <div className="suggested-questions">
@@ -507,7 +506,6 @@ Comprehensive analysis of ${query} reveals several key considerations for legal 
                 return (
                     <div className="tool-panel compare-panel">
                         <div className="tool-content-area">
-                            <div className="placeholder-icon">📊</div>
                             <h4>Document Comparison</h4>
                             <p>Compare documents side-by-side with AI-powered analysis</p>
                             
@@ -671,6 +669,9 @@ Comprehensive analysis of ${query} reveals several key considerations for legal 
     );
 };
 
+// Import our RawTextDisplay component
+import RawTextDisplay from '../components/RawTextDisplay';
+
 // --- Main Document Viewer Component ---
 export default function DocumentViewer() {
     const { documentId } = useParams();
@@ -679,6 +680,7 @@ export default function DocumentViewer() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showComparison, setShowComparison] = useState(false);
+    const [showRawText, setShowRawText] = useState(false);
 
     useEffect(() => {
         const loadDocument = async () => {
@@ -843,11 +845,36 @@ Party of the Second Part (Beta)`;
                 
                 <Panel defaultSize={45} minSize={30}>
                     <main className="document-main-content">
-                        <DocumentDisplay 
-                            text={extractedText} 
-                            highlights={analysis?.highlightedSections || []} 
-                            title={originalName}
-                        />
+                        {/* Text view toggle with enhanced UI */}
+                        <div className="view-toggle">
+                            <button 
+                                className={`toggle-btn ${!showRawText ? 'active' : ''}`}
+                                onClick={() => setShowRawText(false)}
+                                title="Switch to formatted document view with paragraph formatting and highlights"
+                            >
+                                <span role="img" aria-label="Format"></span> Formatted View
+                                <div className="toggle-btn-tooltip">Enhanced document formatting</div>
+                            </button>
+                            <button 
+                                className={`toggle-btn ${showRawText ? 'active' : ''}`}
+                                onClick={() => setShowRawText(true)}
+                                title="Switch to raw text view with line numbers and search functionality"
+                            >
+                                <span role="img" aria-label="Code"></span> Raw Text View
+                                <div className="toggle-btn-tooltip">Line numbers and search</div>
+                            </button>
+                        </div>
+                        
+                        {/* Either show the formatted DocumentDisplay or the enhanced RawTextDisplay */}
+                        {showRawText ? (
+                            <RawTextDisplay text={extractedText} />
+                        ) : (
+                            <DocumentDisplay 
+                                text={extractedText} 
+                                highlights={analysis?.highlightedSections || []} 
+                                title={originalName}
+                            />
+                        )}
                     </main>
                 </Panel>
 

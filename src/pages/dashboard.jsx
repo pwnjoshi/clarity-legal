@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./dashboard.css";
-import logoImg from "../assets/clarity-legal-logo.png"; //  Import the logo image
-import apiService from "../services/apiService.js"; //  Backend integration
+import apiService from "../services/apiService.js";
 import DocumentDashboard from "../components/DocumentDashboard.jsx";
+import DashboardHeader from "../components/DashboardHeader.jsx";
 
 export default function Dashboard() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileObject, setSelectedFileObject] = useState(null); //  Store actual file object
   const [docType, setDocType] = useState("Other");
-  const [dropdownOpen, setDropdownOpen] = useState(false); //  profile dropdown toggle
-  const profileRef = useRef(null); // ref to detect outside clicks
+  // Remove dropdown state - now handled by shared Header
   
   // Backend integration state
   const [isUploading, setIsUploading] = useState(false);
@@ -66,61 +65,11 @@ export default function Dashboard() {
     }
   };
 
-  // Close dropdown when clicking outside profile container
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+
 
   return (
     <div className="dashboard-container">
-      {/* Header */}
-      <header className="dashboard-header">
-        <div className="logo-section">
-          <div className="logo">
-            {/* ✅ Only image + text, no emoji */}
-            <img src={logoImg} alt="Clarity Legal Logo" className="logo-image" />
-          </div>
-        </div>
-
-        {/* Left Navbar */}
-        <nav className="nav-left">
-          <Link to="/dashboard" className="nav-btn">Home</Link>
-          <a href="#" className="nav-btn">Pricing</a>
-        </nav>
-
-        {/* Right Navbar */}
-        <div className="navbar-right">
-          <span className="usage">2/3 Documents Used</span>
-          <button className="upgrade-btn">
-            <span className="upgrade-icon">👑</span> Upgrade
-          </button>
-
-          <div className="profile-container" ref={profileRef}>
-            <div 
-              className="profile" 
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              JD
-            </div>
-            {dropdownOpen && (
-              <ul className="profile-dropdown">
-                <li>My Profile</li>
-                <li>Account</li>
-                <li>Plans</li>
-                <li>Log Out</li>
-              </ul>
-            )}
-          </div>
-        </div>
-      </header>
+      <DashboardHeader />
 
       {/* Main */}
       <div className="dashboard-main">
