@@ -7,11 +7,23 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies and build output
 node_modules
 dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Firebase config with sensitive data
+src/firebaseConfig.js
+backend/config/firebase-service-account.json
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +35,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Uploads directory
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Keys and certificates
+*.pem
+*.key
+*.p12

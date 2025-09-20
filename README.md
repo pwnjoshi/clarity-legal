@@ -57,15 +57,33 @@ npm install
 ```
 
 ### 2. Environment Setup
+
+#### Frontend Environment
 ```bash
-# Copy and configure environment variables
+# Copy and configure frontend environment variables
+cp .env.example .env.local
+```
+
+#### Backend Environment
+```bash
+# Copy and configure backend environment variables
 cp backend/.env.example backend/.env
 ```
 
-Edit `backend/.env` with your credentials:
+Edit your environment files with your credentials:
 - Firebase project ID and service account
 - Google AI API key
 - Google Cloud Document AI processor ID
+
+#### Firebase Configuration
+Create the Firebase configuration file:
+```bash
+cp src/firebaseConfig.example.js src/firebaseConfig.js
+```
+
+Edit `src/firebaseConfig.js` with your Firebase credentials.
+
+See [ENVIRONMENT_SETUP.md](./ENVIRONMENT_SETUP.md) for detailed instructions on securing your credentials.
 
 ### 3. Start Development Servers
 ```bash
