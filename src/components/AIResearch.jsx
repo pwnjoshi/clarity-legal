@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './AIResearch.css';
+import { getApiUrl } from '../utils/apiUtils';
 
 // Typing effect component for research results
 const TypingResearchResult = ({ content, onComplete }) => {
@@ -129,7 +130,7 @@ I can help you research:
         
         try {
             // Simulate API call - replace with actual research API
-            const response = await fetch('http://localhost:3001/api/research/search', {
+            const response = await fetch(getApiUrl('/research/search'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

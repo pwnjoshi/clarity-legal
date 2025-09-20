@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { getApiUrl } from '../utils/apiUtils';
 
 // Custom scrollbar styles
 const scrollbarStyles = `
@@ -43,7 +44,7 @@ const DocumentComparison = ({ originalDocument, onClose }) => {
                     try {
                         console.log('🔍 Attempting to fetch file size for:', originalDocument.path);
                         
-                        const response = await fetch(`http://localhost:3001/api/compare/file-stats?path=${encodeURIComponent(originalDocument.path)}`);
+                        const response = await fetch(getApiUrl(`/compare/file-stats?path=${encodeURIComponent(originalDocument.path)}`));
                         
                         if (response.ok) {
                             const result = await response.json();
@@ -198,7 +199,7 @@ const DocumentComparison = ({ originalDocument, onClose }) => {
                 lastModified: new Date(comparisonFile.lastModified).toLocaleString()
             });
 
-            const response = await fetch('http://localhost:3001/api/compare/compare', {
+            const response = await fetch(getApiUrl('/compare/compare'), {
                 method: 'POST',
                 body: formData
             });

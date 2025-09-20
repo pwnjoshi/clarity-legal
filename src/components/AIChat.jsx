@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './AIChat.css';
+import { getApiUrl } from '../utils/apiUtils';
 
 // Typing effect component for assistant messages
 const TypingMessage = ({ content, onComplete }) => {
@@ -119,7 +120,7 @@ What would you like to analyze first?`,
 
     const loadAnalysisTypes = async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/ai/analysis-types');
+            const response = await fetch(getApiUrl('/ai/analysis-types'));
             if (response.ok) {
                 const data = await response.json();
                 if (data.success) {
@@ -146,7 +147,7 @@ What would you like to analyze first?`,
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:3001/api/ai/chat', {
+            const response = await fetch(getApiUrl('/ai/chat'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -223,7 +224,7 @@ I couldn't process your request right now. Please try rephrasing your question o
 
     const clearChat = async () => {
         try {
-            await fetch(`http://localhost:3001/api/ai/history/${sessionId}`, {
+            await fetch(getApiUrl(`/ai/history/${sessionId}`), {
                 method: 'DELETE'
             });
             setMessages([]);

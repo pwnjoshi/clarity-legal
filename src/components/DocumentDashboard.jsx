@@ -3,6 +3,7 @@ import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../services/apiService';
+import { getApiUrl, handleApiError } from '../utils/apiUtils';
 import './DocumentDashboard.css';
 
 export default function DocumentDashboard() {
@@ -130,7 +131,7 @@ export default function DocumentDashboard() {
     try {
       console.log('Downloading document:', documentId);
       
-      const response = await fetch(`http://localhost:3001/api/documents/${documentId}/download`);
+      const response = await fetch(getApiUrl(`/documents/${documentId}/download`));
       const data = await response.json();
       
       if (data.success && data.downloadURL) {
@@ -142,7 +143,7 @@ export default function DocumentDashboard() {
       }
     } catch (error) {
       console.error('Download error:', error);
-      alert('Failed to download document: ' + error.message);
+      handleApiError(error, 'Failed to download document');
     }
   };
 
@@ -157,7 +158,7 @@ export default function DocumentDashboard() {
     try {
       console.log('Deleting document:', documentId);
       
-      const response = await fetch(`http://localhost:3001/api/documents/${documentId}`, {
+      const response = await fetch(getApiUrl(`/documents/${documentId}`), {
         method: 'DELETE'
       });
       
@@ -180,7 +181,7 @@ export default function DocumentDashboard() {
       }
     } catch (error) {
       console.error('❌ Delete error:', error);
-      alert('❌ Failed to delete document: ' + error.message);
+      handleApiError(error, '❌ Failed to delete document');
     }
   };
 
@@ -221,8 +222,8 @@ export default function DocumentDashboard() {
       
       // Call appropriate backend API endpoint
       const endpoint = forceMode ? 
-        'http://localhost:3001/api/documents/force-clear' : 
-        'http://localhost:3001/api/documents/clear-all';
+        getApiUrl('/documents/force-clear') : 
+        getApiUrl('/documents/clear-all');
       
       const response = await fetch(endpoint, {
         method: 'DELETE'
@@ -257,7 +258,8 @@ export default function DocumentDashboard() {
       const errorMessage = forceMode ?
         `❌ Force clear failed: ${error.message}\n\nTry manual cleanup or contact support.` :
         `❌ Clear all failed: ${error.message}\n\nTry Force Clear option if normal clear keeps failing.`;
-      alert(errorMessage);
+      // Use our error handling utility
+      handleApiError(error, errorMessage);
     }
   };
 
@@ -281,7 +283,7 @@ export default function DocumentDashboard() {
         )
       );
       
-      const response = await fetch(`http://localhost:3001/api/documents/${documentId}/reanalyze`, {
+      const response = await fetch(getApiUrl(`/documents/${documentId}/reanalyze`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -311,7 +313,7 @@ export default function DocumentDashboard() {
       
     } catch (error) {
       console.error('Re-analysis error:', error);
-      alert('Failed to re-analyze document: ' + error.message);
+      handleApiError(error, 'Failed to re-analyze document');
       
       // Revert status on error
       setDocuments(prevDocs => 

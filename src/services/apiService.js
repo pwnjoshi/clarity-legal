@@ -1,13 +1,17 @@
+// Import the API URL utilities
+import { getApiUrl, handleApiError } from '../utils/apiUtils';
+
 // API Service for Clarity Legal Frontend
 class ApiService {
   constructor() {
-    this.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    // We no longer store baseURL directly, as we'll use the getApiUrl helper
     this.timeout = 30000; // 30 seconds timeout
   }
 
   // Generic request handler
   async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
+    // Use the helper to get the full URL (ensures consistency across environments)
+    const url = getApiUrl(endpoint);
     
     const defaultOptions = {
       headers: {
@@ -41,6 +45,7 @@ class ApiService {
 
     } catch (error) {
       console.error('❌ API Request failed:', error);
+      // Rethrow with improved error message for better debugging
       throw new Error(error.message || 'Network request failed');
     }
   }
@@ -65,7 +70,7 @@ class ApiService {
 
       console.log(`📤 Uploading document: ${file.name} (${file.size} bytes)`);
 
-      const response = await fetch(`${this.baseURL}/upload`, {
+      const response = await fetch(getApiUrl('/upload'), {
         method: 'POST',
         body: formData, // Don't set Content-Type, let browser set it for multipart/form-data
       });
@@ -94,7 +99,7 @@ class ApiService {
 
       console.log(`🔄 Processing document: ${file.name} with full pipeline`);
 
-      const response = await fetch(`${this.baseURL}/process-document`, {
+      const response = await fetch(getApiUrl('/process-document'), {
         method: 'POST',
         body: formData,
       });

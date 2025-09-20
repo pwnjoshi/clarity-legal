@@ -6,6 +6,7 @@ import { PanelGroup, Panel, PanelResizeHandle } from 'react-resizable-panels';
 import DocumentDisplay from '../components/DocumentDisplay';
 import DocumentComparison from '../components/DocumentComparison';
 import './DocumentViewer.css';
+import { getApiUrl } from '../utils/apiUtils';
 
 // --- Typing Effect Component for Research ---
 const TypingResearchResult = ({ content, onComplete, renderContent }) => {
@@ -173,7 +174,7 @@ I can help you research:
         setIsTyping(true);
         
         try {
-            const response = await fetch('http://localhost:3001/api/ai/chat', {
+            const response = await fetch(getApiUrl('/ai/chat'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -234,7 +235,7 @@ I can help you research:
             let resultContent;
             
             try {
-                const response = await fetch('http://localhost:3001/api/research/search', {
+                const response = await fetch(getApiUrl('/research/search'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
