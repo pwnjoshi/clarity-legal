@@ -6,5 +6,8 @@
   "cleanUrls": true,
   "buildCommand": "chmod +x ./vercel-build.sh && ./vercel-build.sh",
   "devCommand": "npm run dev",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "env": {
+    "VITE_API_BASE_URL": "https://clarity-legal.onrender.com"
+  }
 }
