@@ -31,8 +31,29 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, or Postman)
+    if(!origin) return callback(null, true);
+    
+    // List of allowed origins (add your Vercel domain here)
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://clarity-legal.vercel.app',
+      'https://clarity-legal-pwnjoshi.vercel.app',
+      process.env.FRONTEND_URL
+    ].filter(Boolean);
+    
+    if(allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production'){
+      callback(null, true);
+    } else {
+      console.log(`Origin ${origin} not allowed by CORS`);
+      callback(null, true); // Temporarily allow all origins for debugging
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -220,6 +241,11 @@ function createFallbackAnalysis(text) {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  // Log request details for debugging
+  console.log('Health check request received:');
+  console.log('  Origin:', req.headers.origin);
+  console.log('  User-Agent:', req.headers['user-agent']);
+  
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
@@ -228,6 +254,29 @@ app.get('/api/health', (req, res) => {
       firebase: firebaseInitialized,
       gemini: !!process.env.GOOGLE_AI_API_KEY,
       documentAI: !!process.env.DOCUMENT_AI_PROCESSOR_ID
+    },
+    // Add debug info
+    debug: {
+      requestOrigin: req.headers.origin || 'No origin header',
+      allowedOrigins: [process.env.FRONTEND_URL || 'http://localhost:5173', 'https://clarity-legal.vercel.app'],
+      environment: process.env.NODE_ENV || 'development'
+    }
+  });
+});
+
+// CORS test endpoint
+app.options('/api/cors-test', cors(), (req, res) => {
+  res.status(200).end();
+});
+
+app.get('/api/cors-test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'CORS test successful',
+    origin: req.headers.origin || 'No origin header',
+    headers: {
+      'access-control-allow-origin': res.getHeader('Access-Control-Allow-Origin'),
+      'content-type': res.getHeader('Content-Type')
     }
   });
 });
