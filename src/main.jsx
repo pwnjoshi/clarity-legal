@@ -6,6 +6,7 @@ import "./text-overflow-fixes.css"; // fixes for text overflow
 import "./document-text-fix.css"; // simplified document text formatting fixes
 import "./view-toggle.css"; // styles for view toggle buttons
 import "./utils/debugEnv"; // Import debug utility for environment variables
+import "./utils/apiDebug"; // Import API debug utility
 
 // Add error boundary for production debugging
 class ErrorBoundary extends React.Component {
